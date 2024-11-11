@@ -1,0 +1,230 @@
+/* You can add global styles to this file, and also import other style files */
+
+$gutter: 1rem; //for primeflex grid system
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+@import "../node_modules/quill/dist/quill.core.css";
+@import "../node_modules/quill/dist/quill.snow.css";
+
+@import "ckeditor5/ckeditor5.css";
+@import "ckeditor5-premium-features/ckeditor5-premium-features.css";
+
+:root{
+    --primary-color: #888c81;
+    --primary-secondary: #d4dab7;
+    --tertiary: #f2efeb;
+}
+
+p {
+    margin: 0 !important;
+}
+
+.p-avatar img {
+    object-fit: cover;
+}
+
+.card-background {
+    .p-card .p-card-title {
+        color: white !important;
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.p-column-filter-menu-button {
+    color: white;
+    background-color: transparent;
+    &:hover,
+    &:focus,
+    &:active {
+        color: rgb(255, 255, 255);
+        background-color: rgb(97, 191, 253);
+
+
+    }
+}
+
+.p-password,
+.p-inputtext,
+.p-dropdown {
+    width: 100%;
+}
+
+.p-datatable .p-datatable-header {
+    padding-top: 0px;
+    border: 0px;
+    background-color: transparent;
+}
+
+.p-card,
+.p-column-filter-overlay {
+    box-shadow:
+        rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+        rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.p-breadcrumb {
+    background-color: transparent;
+    border: 0px;
+    box-shadow: 0px;
+    width: fit-content;
+}
+
+.table {
+    .p-datatable-thead {
+        color: white;
+    }
+
+    .p-datatable .p-sortable-column {
+        background-color: var(--primary-color);
+        color: white;
+        &:first-child {
+            border-radius: 12px 0px 0px 0px;
+        }
+        &:last-child {
+            border-radius: 0px 12px 0px 0px;
+        }
+    }
+    .p-datatable .p-sortable-column .p-sortable-column-icon {
+        color: white;
+        border-radius: 16px;
+    }
+}
+
+.p-table {
+    border-radius: 12px;
+}
+
+.ckeditor-container {
+    height: 500px;
+    width: 100%;
+}
+
+.ck-editor__editable {
+    min-height: 400px;
+}
+
+.ck.ck-editor__top {
+    position: relative;
+}
+
+.p-image-preview-container {
+    width: fit-content !important;
+}
+.p-image-preview-container > img {
+    width: 130px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.p-image-preview {
+    max-width: 80%;
+    max-height: 80vh;
+    width: 768px;
+    object-fit: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.p-image-preview-container {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.ngclass-blog-success{
+    border: 1px solid #4ade80;
+    background-color: #e3ffed;
+}
+.ngclass-blog-warning{
+    border: 1px solid #969696;
+    background-color: #f5f5f5;
+}
+.ngclass-blog-info{
+    border: 1px solid #38bdf8;
+    background-color: #d9f4ff;
+}
+
+.state-background{
+    background-color: #ffffff;
+}
+.name-porfile{
+    @media(max-width: 991px){
+        display: none;
+    }
+}
+
+// .p-button {
+//     color: #ffffff;
+//     background: var(--primary-color);
+//     border: none;
+//     padding: 0.75rem 1.25rem;
+//     font-size: 1rem;
+//     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+//     border-radius: 6px;
+// }
+
+.main-color{
+    color: #ffffff;
+   background: var(--primary-color);
+   border: none;
+   padding: 0.75rem 1.25rem;
+   font-size: 1rem;
+   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+   border-radius: 6px;
+}
+
+
+.ng-tns-c63392258-4 .p-calendar .p-input-icon-rightt {
+    width: 100% !important;
+
+  }
+
+  .profile-data{
+
+    background-color: var(--tertiary);
+
+    img{
+        background-color: black;
+        border-radius: 50%;
+        width: 170px;
+        height: 170px;
+        object-fit: cover;
+    }
+}
+.content-client{
+    row-gap: 4rem;
+    column-gap: 10rem;
+}
+
+.truncated-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+  }
+
+
+.photo-container {
+    width: 100px; /* Tamaño del contenedor */
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color); /* Color de fondo */
+    border-radius: 50%; /* Para hacerlo circular */
+    font-size: 36px; /* Tamaño de la letra */
+    color: #ffffff; /* Color de la letra */
+  }
+
+  .photo-image {
+    width: 100px; /* Mismo tamaño que el contenedor */
+    height: 100px;
+    border-radius: 50%;
+  }

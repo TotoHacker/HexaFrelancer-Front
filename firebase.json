@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "target": "panel",
+    "public": "dist/hexafrelancer-panel",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

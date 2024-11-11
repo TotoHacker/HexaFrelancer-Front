@@ -1,0 +1,179 @@
+<p-card>
+    <p-confirmDialog key="blog-confirm-dialog"></p-confirmDialog>
+    <div class="table">
+        <p-table #dt [value]="blogEntries" [scrollable]="true" scrollHeight="800px" [rowHover]="true" [rows]="10"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loader" [paginator]="true"
+            currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} artículos" [filterDelay]="0"
+            [globalFilterFields]="['blogTitle', 'blogAutor', 'date', 'state', 'visibility']">
+
+            <ng-template pTemplate="caption" class="flex">
+                <div class="flex align-content-center flex-wrap gap-3 justify-content-between">
+                    <div class="w-min">
+                        <p class="w-min font-semibold text-4xl">Blogs</p>
+                    </div>
+                    <div class="table-header flex flex-wrap gap-3">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt,$event)" placeholder="Buscar" />
+                        </span>
+                        <p-button label="Nuevo Blog" [routerLink]="['/blog/new']" icon="pi pi-plus" />
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="blogTitle">
+                        <div class="flex justify-content-between align-items-center">
+                            Título
+                            <p-sortIcon field="blogTitle"></p-sortIcon>
+                            <p-columnFilter type="text" field="blogTitle" display="menu"
+                                class="ml-auto"></p-columnFilter>
+
+        
+                        </div>
+                    </th>
+                    <th pSortableColumn="image">
+                        <div class="flex justify-content-between align-items-center">
+                            Imagen
+                        </div>
+                    </th>
+                    <th pSortableColumn="blogAutor">
+                        <div class="flex justify-content-between align-items-center">
+                            Autor
+                            <p-sortIcon field="blogAutor"></p-sortIcon>
+                            <p-columnFilter type="text" field="blogAutor" display="menu"
+                                class="ml-auto"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="date">
+                        <div class="flex justify-content-between align-items-center">
+                            Fecha
+                            <p-sortIcon field="date"></p-sortIcon>
+                        </div>
+                    </th>
+                    <th pSortableColumn="state">
+                        <div class="flex justify-content-between align-items-center">
+                          Estatus
+                          <p-columnFilter type="text" field="state" display="menu"
+                          class="ml-auto"></p-columnFilter>
+                        </div>
+                      </th>
+                      
+                    <th pSortableColumn="visibility">
+                        <div class="flex justify-content-between align-items-center">
+                            Visibilidad
+                            <p-columnFilter type="text" field="visibility" display="menu"
+                            class="ml-auto"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th pSortableColumn="actions">
+                        <div class="flex justify-content-between align-items-center">
+                            Acciones
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-entry>
+                <tr>
+                    <td>
+                        
+                        {{ entry.blogTitle }}
+                    </td>
+                    <td>
+                        <p-image [src]="entry.image" alt="Image" [preview]="true" />
+                    </td>
+                    <td>
+                        {{ entry.blogAutor }}
+                    </td>
+                    <td>
+                        {{ entry.date }}
+                    </td>
+                    <td>
+                       
+                        <div class="box" [ngClass]="entry.state">
+                            <i [ngClass]="getIconClass(entry.state)" class="pi"></i>
+                            {{ entry.state }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="box" [ngClass]="entry.visibility">
+                            <i [ngClass]="getIconClass(entry.visibility)" class="pi"></i>
+                            {{ entry.visibility }}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="flex align-items-center  gap-2" style="height: 92px;">
+                            <p-button icon="pi pi-pencil" size="small" (click)="openArticleForm(entry._id)"
+                                pTooltip="Editar" />
+                            <p-button icon="pi pi-times" size="small" (click)="confirmDelete(entry._id)"
+                                severity="danger" pTooltip="Eliminar" />
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="7">Sin información.</td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+
+
+
+    </div>
+</p-card>
+
+
+
+
+
+
+<!--p-card>
+    <div class=" font-bold text-4xl text-900 mb-5">
+        Últimos Blogs Creados
+    </div>
+
+    <div class="p-dataview-content">
+        <div class="grid grid-nogutter">
+            <div *ngFor="let blog of recentBlogs" class="col-12 md:col-4">
+                <div class="p-2">
+                    <div class="surface-100 cursor-pointer z-index border-round" (click)="openArticleForm(blog._id)">
+                        <div class="relative">
+                            <img style="object-fit: cover;" class="w-full border-round h-16rem border-noround-bottom"
+                                [src]="blog.image" alt="Imagen del blog" />
+                        </div>
+                        <div class="p-4 flex gap-3 justify-content-between align-items-start"
+                            style="min-height: 179px;">
+                            <div class=" flex flex-column gap-2">
+                                <div class="text-900 font-semibold text-lg mb-2 text-xl">
+                                    {{ blog.blogTitle }}
+                                </div>
+                                <div class="flex gap-1">
+                                    {{ blog.state }} | {{ blog.visibility }}
+                                </div>
+                                <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                                    <div class="text-secondary">
+                                        <i class="pi pi-calendar mr-1"></i> {{ blog.date }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex justify-content-end">
+                                <button pRipple class="p-ripple p-element p-button p-component p-button-icon-only"
+                                    (click)="openArticleForm(blog._id)" type="button" data-pc-name="button"
+                                    data-pc-section="root" aria-label="Editar" title="Editar">
+                                    <span data-pc-section="icon" class="pi pi-pencil p-button-icon"
+                                        style="font-size: 1.2rem"></span>
+                                    <span class="p-ink" aria-hidden="true" role="presentation"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-card-->

@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "hexafrelancer-18bf3"
+  },
+  "targets": {
+    "hexafrelancer-18bf3": {
+      "hosting": {
+        "panel": [
+          "hexafrelancer-panel-administrador"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

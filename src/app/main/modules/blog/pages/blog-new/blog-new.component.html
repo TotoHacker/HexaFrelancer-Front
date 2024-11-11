@@ -1,0 +1,248 @@
+<p-card>
+    <!-- <div class="px-2 font-bold text-4xl text-900 mb-4 ml-4">
+        {{ isEditing ? "Actualizar Blog" : "Crear Blog" }}
+    </div> -->
+    <div class="p-5">
+        <div role="toolbar" class="mb-4 p-toolbar p-component flex justify-content-between ">
+            <div class="font-bold text-4xl text-900 my-2 ">
+                {{ isEditing ? "Actualizar Blog" : "Crear Blog" }}
+            </div>
+            <div class="p-toolbar-group-right p-toolbar-group-end">
+                <div class="my-2 flex gap-3">
+                    <button pbutton pripple label="Delete" icon="pi pi-trash"
+                        class="p-element p-ripple p-button-danger p-button p-component custom-delete-button"
+                        (click)="resetForm()">
+                        <span class="p-button-icon p-button-icon-left pi pi-times" aria-hidden="true"></span>
+                        <span class="p-button-label">Cancelar</span>
+                        <span class="p-ink" aria-hidden="true" role="presentation"></span>
+                    </button>
+                    <button pButton pRipple [label]="isEditing ? 'Actualizar' : 'Publicar'" (click)="
+                            isEditing ? updateBlogEntry() : createBlogEntry()
+                        " [icon]="
+                            isSending
+                                ? 'pi pi-spinner pi-spin'
+                                : isEditing
+                                ? 'pi pi-pencil'
+                                : 'pi pi-plus'
+                        " class="p-element p-ripple p-button-success mr-2 p-button p-component"
+                        [disabled]="entryForm.invalid || isSending">
+                        <span class="p-ink" aria-hidden="true" role="presentation"></span>
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+
+        <form [formGroup]="entryForm">
+            <div class="grid">
+                <div class="col-12 lg:col-8">
+                    <div class="border-1 surface-border border-round mb-4 p-4 mb-3">
+                        <span class="text-900 font-bold block border-bottom-1 surface-border p-3">Título</span>
+                        <input type="text" formControlName="blogTitle" placeholder="Título del Blog"
+                            class="w-full p-3 border-1 surface-border border-round" [ngClass]="{
+                                'ng-invalid ng-dirty':
+                                    entryForm.get('blogTitle').invalid &&
+                                    entryForm.get('blogTitle').touched
+                            }" />
+                        <small *ngIf="
+                                entryForm.get('blogTitle').invalid &&
+                                entryForm.get('blogTitle').touched
+                            " class="text-red-500 text-md font-semibold mt-1 flex items-center">
+                            <i class="pi pi-exclamation-triangle mr-1"></i>
+                            El título es obligatorio.
+                        </small>
+
+                        <span class="text-900 font-bold block border-bottom-1 surface-border p-3">Autor</span>
+                        <input type="text" formControlName="blogAutor" placeholder="Autor del Blog"
+                            class="w-full p-3 border-1 surface-border border-round" />
+                    </div>
+
+                    <div class="border-1 surface-border border-round mb-4 p-4">
+                        <span class="text-900 font-bold block border-bottom-1 surface-border p-3">Imagen de
+                            portada</span>
+                        <p-fileUpload name="image"  customUpload="true" accept="image/*" chooseLabel="Seleccionar Imagen" showUploadButton="false"
+                            class="w-full" (onSelect)="onSelectImages($event)" #fileUpload>
+                        </p-fileUpload>
+
+                        <div *ngIf="imageUrl" class="image-preview">
+                            <img [src]="imageUrl" alt="Vista previa de la imagen" class="preview-img" />
+                        </div>
+
+                        <span class="text-900 font-bold block border-bottom-1 surface-border p-3">Contenido</span>
+                        <ckeditor [editor]="Editor" formControlName="blogContent" [config]="editorConfig" [ngClass]="{
+                                'ng-invalid ng-dirty':
+                                    entryForm.get('blogContent').invalid &&
+                                    entryForm.get('blogContent').touched
+                            }">
+                        </ckeditor>
+                        <small *ngIf="
+                                entryForm.get('blogContent').invalid &&
+                                entryForm.get('blogContent').touched
+                            " class="text-red-500 text-md font-semibold mt-1 flex items-center">
+                            <i class="pi pi-exclamation-triangle mr-1"></i>
+                            El contenido es obligatorio.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="col-12 lg:col-4">
+                    <div class="border-1 surface-border border-round mb-4">
+                        <span class="text-900 font-bold block border-bottom-1 surface-border p-3">Publicar</span>
+                        <div class="p-3">
+
+                            <div class=" p-3 flex align-items-center border-round"
+                            [ngClass]="{
+                                'ngclass-blog-warning':
+                                    entryForm.get('state')?.value ===
+                                    'Borrador',
+                                'ngclass-blog-success':
+                                    entryForm.get('state')?.value ===
+                                    'Publicado'
+                            }">
+                                <span class="text-900 font-semibold mr-3">Estado:</span>
+                                <span class="font-medium">{{
+                                    entryForm.get("state")?.value
+                                    }}</span>
+                                <button pButton type="button" icon="pi pi-fw pi-pencil "
+                                    class="p-button-rounded p-button-text ml-auto p-button-icon-only animated-button bg-white"
+                                    (click)="toggleEstado()" [ngClass]="{
+                                        'p-button-secondary':
+                                            entryForm.get('state')?.value ===
+                                            'Borrador',
+                                        'p-button-success':
+                                            entryForm.get('state')?.value ===
+                                            'Publicado'
+                                    }"></button>
+                            </div>
+                        </div>
+
+                        <div class="p-3">
+                            <div class=" p-3 flex align-items-center border-round"
+                            [ngClass]="{
+                                'ngclass-blog-warning':
+                                            entryForm.get('visibility')
+                                                ?.value === 'Privado',
+                                'ngclass-blog-success':
+                                    entryForm.get('visibility')
+                                    ?.value === 'Público'
+                            }">
+                                <span class="text-900 font-semibold mr-3">Visibilidad:</span>
+                                <span class="font-medium">{{
+                                    entryForm.get("visibility")?.value
+                                    }}</span>
+                                <button pButton type="button" icon="pi pi-fw pi-pencil"
+                                    class="p-button-rounded p-button-text ml-auto p-button-icon-only animated-button bg-white"
+                                    (click)="toggleVisibilidad()" [ngClass]="{
+                                        'p-button-secondary':
+                                            entryForm.get('visibility')
+                                                ?.value === 'Privado',
+                                        'p-button-success':
+                                            entryForm.get('visibility')
+                                                ?.value === 'Público'
+                                    }"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!--div *ngFor="let tag of tags" class="p-tag-container">
+                                    <button pButton type="button" class="p-button p-button-text custom-chip"
+                                            [ngClass]="{'custom-chip-selected': selectedTag === tag.tag}"
+                                            (click)="selectTag(tag.tag)">
+                                        {{ tag.tag }}
+                                    </button>
+                                    <button pButton type="button" icon="pi pi-times" class="p-button p-button-danger p-button-text"
+                                            (click)="confirmRemoveTag(tag._id,tag.tag)">
+                                    </button>
+                                </div-->
+
+                    <div class="border-1 surface-border border-round mb-4">
+                        <span class="text-900 font-bold block border-bottom-1 surface-border p-3">Etiquetas</span>
+
+                        <div class="p-3">
+                            <div class="p-1 flex flex-wrap align-items-center gap-3 border-round">
+                                <div *ngFor="let tag of tags" class="p-tag-container">
+                                    <div class="p-chip-wrapper">
+                                        <button
+                                            pButton
+                                            type="button"
+                                            class="p-button p-button-text custom-chip"
+                                            [ngClass]="{'custom-chip-selected': (entryForm.get('tags')?.value || []).includes(tag.tag)}"
+                                            (click)="selectTag(tag.tag)">
+                                            {{ tag.tag }}
+
+                                            <div class="pl-2"></div>
+                                            <button
+                                                pButton
+                                                pRipple
+                                                type="button"
+                                                icon="pi pi-times"
+                                                class="p-button p-button-danger p-button-text remove-tag-button"
+                                                (click)="confirmRemoveTag(tag._id, tag.tag)">
+                                            </button>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pb-4"></div>
+
+                            <p-inputGroup>
+                                <form [formGroup]="tagForm" (ngSubmit)="createTag()"
+                                    class="flex align-items-center w-full">
+                                    <input type="text" pInputText formControlName="tag"
+                                        placeholder="Añadir nueva etiqueta"
+                                        class="p-inputtext p-component flex-grow-1" />
+                                    <div class="pl-2"></div>
+                                    <button type="submit" class="plain-button">Crear</button>
+                                </form>
+                            </p-inputGroup>
+                        </div>
+
+                    </div>
+
+                    <p-confirmDialog></p-confirmDialog>
+
+
+
+
+
+                    <div class="border-1 surface-border border-round p-fluid mb-4">
+                        <span class="text-900 font-bold block border-bottom-1 surface-border p-3">Meta</span>
+                        <div class="p-3">
+                            <div class="mb-4">
+                                <input type="text" pInputText placeholder="Título Meta" formControlName="metaTitle"
+                                    class="w-full" maxlength="60" [ngClass]="{
+                                        'is-invalid':
+                                            entryForm.controls['metaTitle']
+                                                .value.length > 60
+                                    }" />
+                                <small *ngIf="
+                                        entryForm.controls['metaTitle'].value
+                                            .length >= 60
+                                    " class="text-red-500">
+                                    El título meta no debe exceder los 60
+                                    caracteres.
+                                </small>
+                            </div>
+                            <div>
+                                <textarea rows="6" pInputTextarea placeholder="Descripción Meta"
+                                    formControlName="metaDescription" class="w-full" maxlength="160" [ngClass]="{
+                                        'is-invalid':
+                                            entryForm.controls[
+                                                'metaDescription'
+                                            ].value.length > 160
+                                    }"></textarea>
+                                <small *ngIf="
+                                        entryForm.controls['metaDescription']
+                                            .value.length >= 160
+                                    " class="text-red-500">
+                                    La descripción meta no debe exceder los 160
+                                    caracteres.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</p-card>
