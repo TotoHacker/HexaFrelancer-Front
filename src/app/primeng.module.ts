@@ -45,7 +45,7 @@ import { PasswordModule } from 'primeng/password';
 import { EditorModule } from 'primeng/editor';
 import { ChipsModule } from 'primeng/chips';
 import { InputGroupModule } from 'primeng/inputgroup';
-
+import { FloatLabelModule } from 'primeng/floatlabel';
 
 
 const PrimeNgComponents = [
@@ -94,10 +94,8 @@ const PrimeNgComponents = [
     PasswordModule,
     EditorModule,
     ChipsModule,
-    InputGroupModule
-
-
-
+    InputGroupModule,
+    FloatLabelModule,
 ];
 
 @NgModule({
