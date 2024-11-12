@@ -7,13 +7,20 @@
             <div >
 
                 <div class="text-center mb-5">
-                    <div class="title text-4xl font-semibold mb-3">Inicio de sesión</div>
+                    <div class="title text-5xl font-semibold mb-3">Registrarse</div>
                     <!-- <span class="text-600 font-medium">Inicia sesion para continuar</span> -->
                 </div>
 
                 <div>
 
                     <form [formGroup]="loginForm" class="flex flex-column gap-5">
+                        <div class="">
+                            <p-floatLabel>
+                            <input formControlName="name" id="name" type="text"
+                                pInputText class="w-full border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90" >
+                                <label for="name" class="px-3">Nombre de usuario</label>
+                                </p-floatLabel>
+                        </div>
                         <div class="">
                             <p-floatLabel>
                             <input formControlName="email" id="email1" type="text"
@@ -30,19 +37,32 @@
                                 <label for="password1" class="px-3">Contraseña</label>
                             </p-floatLabel>
                         </div>
+                        <div class="">
+                            <p-floatLabel>
+                            <p-password [feedback]="false" formControlName="passwordConfirm" id="password2"
+                                 [toggleMask]="true"
+                                inputStyleClass="w-full py-3 px-4 md:w-30rem border-round-3xl shadow-1 border-solid border-1 border-black-alpha-90"></p-password>
+                                <label for="password2" class="px-3">Confirmar contraseña</label>
+                            </p-floatLabel>
+                        </div>
                         <div class="flex flex-column gap-3">
-                            <div class="flex align-items-center justify-content-end gap-5">
+                            <!-- <div class="flex align-items-center justify-content-end gap-5">
                                 <a class="font-medium no-underline ml-2 text-right cursor-pointer"
                                     style="color: var(--primary-color)" (click)="recoverPassword()">¿Olvidaste tu
                                     contraseña?</a>
-                            </div>
-                            <button pButton pRipple label="Iniciar sesión" class="w-full p-3 text-xl border-round-3xl" [loading]="loader"
+                            </div> -->
+                            <button pButton pRipple label="Registrarse" class="w-full p-3 text-xl border-round-3xl" [loading]="loader"
                                 style="background-color: var(--primary-color); border: none;"
                                 (click)="submitForm()"></button>
-                            <div class="flex justify-content-center mt-4">
+                                <div class="text-center mt-3">
+                                    <a class="font-medium no-underline ml-2 text-right cursor-pointer"
+                                    style="color: var(--primary-color)" routerLink="login">Ya tengo cuenta</a>
+                                </div>
+
+                            <!-- <div class="flex justify-content-center mt-3">
                                 <button pButton pRipple label="Registrate" class="w-6 p-3 text-xl border-round-3xl" [loading]="loader"
                                 style="background-color: var(--primary-color); border: none;"></button>
-                            </div>
+                            </div> -->
                         </div>
                         <p-messages *ngIf="showMessages" [value]="msgs"></p-messages>
                     </form>

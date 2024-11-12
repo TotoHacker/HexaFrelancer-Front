@@ -17,10 +17,15 @@ $gutter: 1rem; //for primeflex grid system
     --primary-color: #4B6CDF;
     --primary-secondary: #939FB4;
     --tertiary: #f2efeb;
+    --blue-title: #0F4571
 }
 
 p {
     margin: 0 !important;
+}
+
+.title{
+    color: var(--blue-title);
 }
 
 .p-avatar img {

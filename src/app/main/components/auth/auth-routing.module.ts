@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AccessComponent } from './access/access.component';
 import { ErrorComponent } from './error/error.component';
+import { SingUpComponent } from './sing-up/sing-up.component';
 
 @NgModule({
     imports: [
@@ -15,6 +16,7 @@ import { ErrorComponent } from './error/error.component';
             { path: 'error', component: ErrorComponent },
             { path: 'access', component: AccessComponent },
             { path: 'login', component: LoginComponent },
+            { path: 'sing-Up', component: SingUpComponent },
             { path: '**', redirectTo: '/notfound' },
         ]),
     ],

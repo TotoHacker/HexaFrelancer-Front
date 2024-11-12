@@ -95,7 +95,10 @@ const PrimeNgComponents = [
     EditorModule,
     ChipsModule,
     InputGroupModule,
-    FloatLabelModule,
+    FloatLabelModule
+
+
+
 ];
 
 @NgModule({
