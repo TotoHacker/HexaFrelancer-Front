@@ -10,6 +10,8 @@ import { PasswordModule } from 'primeng/password';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { LoginService } from 'src/app/layout/service/login.service';
 import { RecoverPasswordComponent } from 'src/app/widgets/recover-password/recover-password.component';
+import { FloatLabelModule } from 'primeng/floatlabel';
+
 
 
 @Component({
@@ -23,7 +25,8 @@ import { RecoverPasswordComponent } from 'src/app/widgets/recover-password/recov
         RouterModule,
         InputTextModule,
         ButtonModule,
-        
+        FloatLabelModule
+
     ],
     providers: [DialogService],
     selector: 'app-login',
