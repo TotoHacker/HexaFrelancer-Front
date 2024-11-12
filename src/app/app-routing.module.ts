@@ -32,7 +32,6 @@ import { SingUpComponent } from './main/components/auth/sing-up/sing-up.componen
                     loadChildren: () => import('./main/components/auth/auth-routing.module').then((m) => m.AuthRoutingModule),
                 },
                 { path: 'notfound', component: NotfoundComponent },
-                { path: 'login', component: SingUpComponent },
                 { path: '**', redirectTo: '/notfound' },
 
             ],

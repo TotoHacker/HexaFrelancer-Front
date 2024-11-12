@@ -29,7 +29,6 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 ],
 providers: [DialogService],
   templateUrl: './sing-up.component.html',
-  styleUrl: './sing-up.component.scss',
   styles: [
     `
         :host ::ng-deep .pi-eye,

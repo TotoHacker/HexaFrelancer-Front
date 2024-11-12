@@ -16,7 +16,7 @@ import { SingUpComponent } from './sing-up/sing-up.component';
             { path: 'error', component: ErrorComponent },
             { path: 'access', component: AccessComponent },
             { path: 'login', component: LoginComponent },
-            { path: 'sing-Up', component: SingUpComponent },
+            { path: 'sing-up', component: SingUpComponent },
             { path: '**', redirectTo: '/notfound' },
         ]),
     ],

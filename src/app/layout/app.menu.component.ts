@@ -14,7 +14,7 @@ export class AppMenuComponent implements OnInit {
     ngOnInit() {
         this.model = [
             {
-                label: 'Home',
+                label: 'Inicio',
                 items: [
                     {
                         label: 'Dashboard',
@@ -24,7 +24,7 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: 'Administrador',
+                label: 'Proyecto',
                 items: [
                     {
                         label: 'Administradores',
