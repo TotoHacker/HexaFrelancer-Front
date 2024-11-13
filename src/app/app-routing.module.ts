@@ -6,6 +6,7 @@ import { DashboardMainPageComponent } from './main/modules/dashboard/pages/dashb
 import { LoginComponent } from './main/components/auth/login/login.component';
 import { SingUpComponent } from './main/components/auth/sing-up/sing-up.component';
 import { single } from 'rxjs';
+import { ProyectsRoutingModule } from './main/modules/proyects/proyects-routing.module';
 // import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
@@ -26,6 +27,11 @@ import { single } from 'rxjs';
                             path: 'admins',
                             loadChildren: () => import('./main/modules/administrators/admins-routing.module').then((m) => m.AdminsRoutingModule),
                         },
+                        {
+                            path: 'proyects',
+                            loadChildren: () => import('./main/modules/proyects/proyects-routing.module').then((m) => m.ProyectsRoutingModule),
+                        },
+
                     ],
                 },
                 {

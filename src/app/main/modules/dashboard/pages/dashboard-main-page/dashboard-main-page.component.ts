@@ -10,7 +10,6 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 // import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { BlogEntry } from '../../../blog/models/blog-models.model';
-import { BlogService } from '../../../blog/services/blog.service';
 import { PrimeNgModule } from 'src/app/primeng.module';
 
 @Component({
@@ -39,7 +38,6 @@ export class DashboardMainPageComponent implements OnInit {
     constructor(
         // private auth: AngularFireAuth,
         private router: Router,
-        public blogService: BlogService,
         private toastService: ToastService
     ) {
         // this.auth.authState.subscribe(async (auth) => {
@@ -51,39 +49,38 @@ export class DashboardMainPageComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.getBlogEntries();
+        // this.getBlogEntries();
     }
 
 
 
-        async getBlogEntries(): Promise<void> {
-            try {
-                const response = await this.blogService.getBlogEntries();
-                this.blogEntries = response;
+        // async getBlogEntries(): Promise<void> {
+        //     try {
+        //         this.blogEntries = response;
 
 
-                this.recentBlogs = this.blogEntries
-                    .sort(
-                        (a, b) =>
-                            new Date(b.date).getTime() - new Date(a.date).getTime()
-                    )
-                    .slice(0, 3);
+        //         this.recentBlogs = this.blogEntries
+        //             .sort(
+        //                 (a, b) =>
+        //                     new Date(b.date).getTime() - new Date(a.date).getTime()
+        //             )
+        //             .slice(0, 3);
 
 
-                this.calculateBlogStatistics();
+        //         this.calculateBlogStatistics();
 
-                console.info('recentBlogs ', this.recentBlogs);
-                console.info('blogStatistics ', this.blogStatistics);
-            } catch (error) {
-                console.log(error);
-                this.toastService.showError(
-                    'Error',
-                    'Ocurrió un problema al realizar la consulta'
-                );
-            } finally {
+        //         console.info('recentBlogs ', this.recentBlogs);
+        //         console.info('blogStatistics ', this.blogStatistics);
+        //     } catch (error) {
+        //         console.log(error);
+        //         this.toastService.showError(
+        //             'Error',
+        //             'Ocurrió un problema al realizar la consulta'
+        //         );
+        //     } finally {
 
-            }
-        }
+        //     }
+        // }
 
         calculateBlogStatistics(): void {
             const draftCount = this.blogEntries.filter(blog => blog.state.toLowerCase() === 'borrador').length;

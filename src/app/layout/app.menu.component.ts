@@ -29,12 +29,12 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Lista de proyectos',
                         icon: 'pi pi-fw pi-folder-open',
-                        routerLink: ['/proyect/list'],
+                        routerLink: ['/proyects/list'],
                     },
                     {
                         label: 'Agregar proyecto',
                         icon: 'pi pi-fw pi-plus',
-                        routerLink: ['/proyect/new'],
+                        routerLink: ['/proyects/new'],
                     },
 
 

@@ -1,4 +1,4 @@
-<section >
+<section *ngIf="admins">
     <p-confirmDialog key="admin-confirm-dialog"></p-confirmDialog>
     <div class="pb-3">
         <p-breadcrumb class="max-w-full" [model]="items">
@@ -29,7 +29,7 @@
         <div class="table">
             <p-table
                 #dt
-
+                [value]="admins"
                 [scrollable]="true"
                 scrollHeight="500px"
                 [rowHover]="true"
@@ -46,9 +46,9 @@
                     <div
                         class="flex align-content-center flex-wrap gap-3 justify-content-between"
                     >
-                        <div class="w-min">
-                            <p class="w-min font-semibold text-4xl">
-                                Administradores
+                        <div class="">
+                            <p class=" font-semibold text-4xl">
+                               Mis Proyectos
                             </p>
                         </div>
                         <div class="table-header flex flex-wrap gap-3">
