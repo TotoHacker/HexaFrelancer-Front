@@ -5,6 +5,7 @@ import { AppLayoutComponent } from './layout/app.layout.component';
 import { DashboardMainPageComponent } from './main/modules/dashboard/pages/dashboard-main-page/dashboard-main-page.component';
 import { LoginComponent } from './main/components/auth/login/login.component';
 import { SingUpComponent } from './main/components/auth/sing-up/sing-up.component';
+import { single } from 'rxjs';
 // import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { SingUpComponent } from './main/components/auth/sing-up/sing-up.componen
                     loadChildren: () => import('./main/components/auth/auth-routing.module').then((m) => m.AuthRoutingModule),
                 },
                 { path: 'notfound', component: NotfoundComponent },
+                { path: 'login', component: SingUpComponent },
                 { path: '**', redirectTo: '/notfound' },
 
             ],

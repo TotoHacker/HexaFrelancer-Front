@@ -24,72 +24,78 @@ export class AppMenuComponent implements OnInit {
                 ],
             },
             {
-                label: 'Proyecto',
+                label: 'Mis proyecto',
                 items: [
                     {
-                        label: 'Administradores',
-                        icon: 'pi pi-fw pi-user',
-                        routerLink: ['/admins/list'],
+                        label: 'Lista de proyectos',
+                        icon: 'pi pi-fw pi-folder-open',
+                        routerLink: ['/proyect/list'],
                     },
+                    {
+                        label: 'Agregar proyecto',
+                        icon: 'pi pi-fw pi-plus',
+                        routerLink: ['/proyect/new'],
+                    },
+
 
                 ],
             },
             {
-                label: 'Terapeutas',
+                label: 'Mensajes',
                 items: [
                     {
-                        label: 'Terapeutas',
+                        label: 'Chat',
                         icon: 'pi pi-fw pi-users',
                         routerLink: ['/therapist/list'],
                     },
 
                 ],
             },
-            {
-                label: 'Horario del terapeuta',
-                items: [
-                    {
-                        label: 'Lista de horarios',
-                        icon: 'pi pi-fw pi-list',
-                        routerLink: ['/appointments/list'],
+            // {
+            //     label: 'Horario del terapeuta',
+            //     items: [
+            //         {
+            //             label: 'Lista de horarios',
+            //             icon: 'pi pi-fw pi-list',
+            //             routerLink: ['/appointments/list'],
 
-                    },
-                    // {
-                    //     label: 'Agregar horario',
-                    //     icon: 'pi pi-fw pi-plus',
-                    //     routerLink: ['/appointments/new'],
-                    // },
+            //         },
+            //         // {
+            //         //     label: 'Agregar horario',
+            //         //     icon: 'pi pi-fw pi-plus',
+            //         //     routerLink: ['/appointments/new'],
+            //         // },
 
-                ],
-            },
-            {
-                label: 'Usuarios',
-                items: [
-                    {
-                        label: 'Usuarios',
-                        icon: 'pi pi-fw pi-users',
-                        routerLink: ['/users/list'],
-                    },
+            //     ],
+            // },
+            // {
+            //     label: 'Usuarios',
+            //     items: [
+            //         {
+            //             label: 'Usuarios',
+            //             icon: 'pi pi-fw pi-users',
+            //             routerLink: ['/users/list'],
+            //         },
 
-                ],
-            },
-            {
-                label: 'BLOG',
-                items: [
-                    {
-                        label: 'Blogs',
-                        icon: 'pi pi-fw pi-list',
-                        routerLink: ['/blog/list'],
+            //     ],
+            // },
+            // {
+            //     label: 'BLOG',
+            //     items: [
+            //         {
+            //             label: 'Blogs',
+            //             icon: 'pi pi-fw pi-list',
+            //             routerLink: ['/blog/list'],
 
-                    },
-                    {
-                        label: 'Nuevo blog',
-                        icon: 'pi pi-fw pi-plus',
-                        routerLink: ['/blog/new'],
-                    },
+            //         },
+            //         {
+            //             label: 'Nuevo blog',
+            //             icon: 'pi pi-fw pi-plus',
+            //             routerLink: ['/blog/new'],
+            //         },
 
-                ],
-            },
+            //     ],
+            // },
         ];
     }
 }
