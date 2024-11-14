@@ -53,8 +53,9 @@
                         </div>
                         <div class="table-header flex flex-wrap gap-3">
                             <span class="p-input-icon-left">
-                                <i class="pi pi-search"></i>
+                                <i class="pi pi-search px-2"></i>
                                 <input
+                                class="border-round-3xl shadow-2 px-6 border-solid border-1 border-black-alpha-90"
                                     pInputText
                                     type="text"
                                     (input)="
@@ -68,11 +69,14 @@
 
                             <!-- <button pButton pRipple label="Nuevo administrador" icon="pi pi-plus"
                                 class="p-button-success"></button> -->
-                            <p-button
-                                label="Nuevo administrador"
+                            <button
+                            class="border-round-3xl"
+                            style="background-color: var(--primary-color);"
+                                pButton
+                                label="Nuevo proyecto"
                                 icon="pi pi-plus"
                                 (onClick)="openAdminForm()"
-                            />
+                            ></button>
                         </div>
                     </div>
                 </ng-template>
@@ -83,7 +87,7 @@
                             <div
                                 class="flex justify-content-between align-items-center"
                             >
-                                Nombre
+                                Fecha de creación
                                 <p-sortIcon field="name"></p-sortIcon>
                                 <p-columnFilter
                                     type="text"
@@ -98,7 +102,7 @@
                             <div
                                 class="flex justify-content-between align-items-center"
                             >
-                                Celular
+                                Titulo
                                 <p-sortIcon field="phone"></p-sortIcon>
                             </div>
                         </th>
@@ -107,7 +111,7 @@
                             <div
                                 class="flex justify-content-between align-items-center"
                             >
-                                Correo electrónico
+                                Precio
                                 <p-sortIcon field="email"></p-sortIcon>
                                 <p-columnFilter
                                     type="text"
