@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 // import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { BlogEntry } from '../../../blog/models/blog-models.model';
 import { PrimeNgModule } from 'src/app/primeng.module';
+import { ChartModule } from 'primeng/chart';
 
 @Component({
     standalone: true,
@@ -24,112 +25,145 @@ import { PrimeNgModule } from 'src/app/primeng.module';
         TableModule,
         ButtonModule,
         PrimeNgModule,
+        ChartModule,
     ],
     selector: 'app-dashboard-main-page',
     templateUrl: './dashboard-main-page.component.html',
 })
 export class DashboardMainPageComponent implements OnInit {
-    public blogEntries: Array<BlogEntry> = [];
-    public recentBlogs: Array<BlogEntry> = [];
 
-    public currentUser!: any | null;
-    blogStatistics: { draftCount: number; publishedCount: number; privateCount: number; publicCount: number; totalBlogs: number; mostPopularTag: string; topTags:any; };
+    public currentUser: any | null = {
+        displayName: 'Josué',
+        photoURL: 'https://firebasestorage.googleapis.com/v0/b/cocity-loft.appspot.com/o/clients%2F98a6u3xynd7.jpeg?alt=media&token=73c217a9-6805-4465-bbae-121873353d60',
+    };
+
 
     constructor(
-        // private auth: AngularFireAuth,
-        private router: Router,
-        private toastService: ToastService
     ) {
-        // this.auth.authState.subscribe(async (auth) => {
-        //     this.currentUser = auth;
-        //     if (auth != null) {
-        //         const token = await auth.getIdTokenResult();
-        //     }
-        // });
     }
+    data: any;
+    options: any;
+    data2: any;
+    options2: any;
 
-    ngOnInit(): void {
-        // this.getBlogEntries();
-    }
+    ngOnInit() {
+        const documentStyle = getComputedStyle(document.documentElement);
+        const textColor = documentStyle.getPropertyValue('--text-color');
+        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
+        this.data = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [
+                {
+                    type: 'line',
+                    label: 'Dataset 1',
+                    borderColor: documentStyle.getPropertyValue('--blue-500'),
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0.4,
+                    data: [50, 25, 12, 48, 56, 76, 42]
+                },
+                {
+                    type: 'bar',
+                    label: 'Dataset 2',
+                    backgroundColor: documentStyle.getPropertyValue('--green-500'),
+                    data: [21, 84, 24, 75, 37, 65, 34],
+                    borderColor: 'white',
+                    borderWidth: 2
+                },
+                {
+                    type: 'bar',
+                    label: 'Dataset 3',
+                    backgroundColor: documentStyle.getPropertyValue('--orange-500'),
+                    data: [41, 52, 24, 74, 23, 21, 32]
+                }
+            ]
+        };
 
+        this.options = {
+            maintainAspectRatio: false,
+            aspectRatio: 0.6,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder
+                    }
+                }
+            }
+        };
 
-        // async getBlogEntries(): Promise<void> {
-        //     try {
-        //         this.blogEntries = response;
+       this.data2 = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [
+                {
+                    label: 'My First dataset',
+                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
+                    borderColor: documentStyle.getPropertyValue('--blue-500'),
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: 'My Second dataset',
+                    backgroundColor: documentStyle.getPropertyValue('--pink-500'),
+                    borderColor: documentStyle.getPropertyValue('--pink-500'),
+                    data: [28, 48, 40, 19, 86, 27, 90]
+                }
+            ]
+        };
 
+        this.options2 = {
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            aspectRatio: 0.8,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: textColor
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: textColorSecondary,
+                        font: {
+                            weight: 500
+                        }
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: textColorSecondary
+                    },
+                    grid: {
+                        color: surfaceBorder,
+                        drawBorder: false
+                    }
+                }
+            }
 
-        //         this.recentBlogs = this.blogEntries
-        //             .sort(
-        //                 (a, b) =>
-        //                     new Date(b.date).getTime() - new Date(a.date).getTime()
-        //             )
-        //             .slice(0, 3);
-
-
-        //         this.calculateBlogStatistics();
-
-        //         console.info('recentBlogs ', this.recentBlogs);
-        //         console.info('blogStatistics ', this.blogStatistics);
-        //     } catch (error) {
-        //         console.log(error);
-        //         this.toastService.showError(
-        //             'Error',
-        //             'Ocurrió un problema al realizar la consulta'
-        //         );
-        //     } finally {
-
-        //     }
-        // }
-
-        calculateBlogStatistics(): void {
-            const draftCount = this.blogEntries.filter(blog => blog.state.toLowerCase() === 'borrador').length;
-            const publishedCount = this.blogEntries.filter(blog => blog.state.toLowerCase() === 'publicado').length;
-            const privateCount = this.blogEntries.filter(blog => blog.visibility.toLowerCase() === 'privado').length;
-            const publicCount = this.blogEntries.filter(blog => blog.visibility.toLowerCase() === 'público').length;
-
-            this.blogStatistics = {
-                draftCount,
-                publishedCount,
-                privateCount,
-                publicCount,
-                totalBlogs: this.blogEntries.length,
-                mostPopularTag: this.getMostPopularTag(),
-                topTags: this.getTopTags()
-            };
         }
-
-        getMostPopularTag(): string {
-            const tags = this.blogEntries.flatMap(blog => blog.tags);
-            const tagCounts = tags.reduce((acc, tag) => {
-                acc[tag] = (acc[tag] || 0) + 1;
-                return acc;
-            }, {} as Record<string, number>);
-
-            const mostPopularTag = Object.keys(tagCounts).reduce((a, b) => tagCounts[a] > tagCounts[b] ? a : b);
-            return mostPopularTag;
-        }
-
-        getTopTags(): { name: string, count: number }[] {
-            const tags = this.blogEntries.flatMap(blog => blog.tags);
-            const tagCounts = tags.reduce((acc, tag) => {
-                acc[tag] = (acc[tag] || 0) + 1;
-                return acc;
-            }, {} as Record<string, number>);
-
-            //
-            const sortedTags = Object.keys(tagCounts)
-                .map(tag => ({ name: tag, count: tagCounts[tag] }))
-                .sort((a, b) => b.count - a.count); //
-
-            //
-            return sortedTags.slice(0, 5);
-        }
-
-
-
-
-    openArticleForm(entryId: string) {
-        this.router.navigate(['blog/update/' + entryId]);
     }
 }

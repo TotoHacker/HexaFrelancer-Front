@@ -1,17 +1,11 @@
 <section class="flex flex-column gap-4 p-3" *ngIf="currentUser">
     <!-- Profile Section -->
-    <div
-        class="flex align-items-center gap-4 p-3 surface-card border-round shadow-2"
-    >
-        <img
-            class="border-circle w-5rem h-5rem shadow-3"
-            [src]="currentUser.photoURL"
-            alt=""
-            style="object-fit: cover"
-        />
+    <div class="flex align-items-center gap-4 p-3 surface-card border-round shadow-2">
+        <img class="border-circle w-5rem h-5rem shadow-3" [src]="currentUser.photoURL" alt=""
+            style="object-fit: cover" />
         <div class="flex flex-column">
             <p class="text-2xl font-semibold text-primary">
-                Bienvenido  {{ currentUser.displayName }}
+                Bienvenido {{ currentUser.displayName }}
             </p>
             <p class="text-sm text-500">
                 Último acceso: 04/05/2022 a las 10:24 am
@@ -19,198 +13,22 @@
         </div>
     </div>
 
-    <!-- Statistics Section -->
-    <div class="grid">
-        <div class="col-12 md:col-6 lg:col-3">
-            <div
-                class="surface-card p-4 border-round shadow-2"
-                style="min-height: 9rem"
-            >
-                <div class="flex justify-content-between align-items-center">
-                    <div>
-                        <span class="block text-500 font-medium mb-1"
-                            >Blogs en Borrador</span
-                        >
-                        <div class="text-900 font-semibold text-xl">
-                            {{ blogStatistics?.draftCount }}
-                        </div>
-                    </div>
-                    <button
-                        pButton
-                        type="button"
-                        class="p-button-text bg-yellow-100 border-circle flex align-items-center justify-content-center"
-                        style="width: 3rem; height: 3rem"
-                        [routerLink]="['/blog/list']"
-                    >
-                        <i class="pi pi-pencil text-yellow-600 text-2xl"></i>
-                    </button>
+    <div class="flex flex-row gap-5 w-full">
+        <div class="w-full">
+            <p-card>
+                <div >
+                    <p-chart type="line" [data]="data" [options]="options" />
                 </div>
-            </div>
+            </p-card>
         </div>
-
-        <div class="col-12 md:col-6 lg:col-3">
-            <div
-                class="surface-card p-4 border-round shadow-2"
-                style="min-height: 9rem"
-            >
-                <div class="flex justify-content-between align-items-center">
-                    <div>
-                        <span class="block text-500 font-medium mb-1"
-                            >Blogs Publicados</span
-                        >
-                        <div class="text-900 font-semibold text-xl">
-                            {{ blogStatistics?.publishedCount }}
-                        </div>
-                    </div>
-                    <button
-                        pButton
-                        type="button"
-                        class="p-button-text bg-green-100 border-circle flex align-items-center justify-content-center"
-                        style="width: 3rem; height: 3rem"
-                        [routerLink]="['/blog/list']"
-                    >
-                        <i
-                            class="pi pi-check-circle text-green-500 text-2xl"
-                        ></i>
-                    </button>
+        <div class="w-full">
+            <p-card>
+                <div >
+                    <p-chart type="bar" [data]="data2" [options]="options2" />
                 </div>
-            </div>
-        </div>
-
-        <div class="col-12 md:col-6 lg:col-3">
-            <div
-                class="surface-card p-4 border-round shadow-2"
-                style="min-height: 9rem"
-            >
-                <div class="flex justify-content-between align-items-center">
-                    <div>
-                        <span class="block text-500 font-medium mb-1"
-                            >Blogs Privados</span
-                        >
-                        <div class="text-900 font-semibold text-xl">
-                            {{ blogStatistics?.privateCount }}
-                        </div>
-                    </div>
-                    <button
-                        pButton
-                        type="button"
-                        class="p-button-text bg-gray-200 border-circle flex align-items-center justify-content-center"
-                        style="width: 3rem; height: 3rem"
-                        [routerLink]="['/blog/list']"
-                    >
-                        <i class="pi pi-lock text-gray-500 text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 md:col-6 lg:col-3">
-            <div
-                class="surface-card p-4 border-round shadow-2"
-                style="min-height: 9rem"
-            >
-                <div class="flex justify-content-between align-items-center">
-                    <div>
-                        <span class="block text-500 font-medium mb-1"
-                            >Blogs Públicos</span
-                        >
-                        <div class="text-900 font-semibold text-xl">
-                            {{ blogStatistics?.publicCount }}
-                        </div>
-                    </div>
-                    <button
-                        pButton
-                        type="button"
-                        class="p-button-text bg-blue-100 border-circle flex align-items-center justify-content-center"
-                        style="width: 3rem; height: 3rem"
-                        [routerLink]="['/blog/list']"
-                    >
-                        <i class="pi pi-globe text-blue-500 text-2xl"></i>
-                    </button>
-                </div>
-            </div>
+            </p-card>
         </div>
     </div>
 
-    <div class="surface-card p-4 border-round shadow-2">
-        <div class="flex flex-column">
-            <div class="flex justify-content-between align-items-center mb-3">
-                <span class="block text-700 font-semibold text-xl">Etiquetas Más Usadas</span>
-                <i class="pi pi-tags text-primary text-3xl"></i>
-            </div>
-            <div class="flex flex-wrap gap-2">
-                <ng-container *ngFor="let tag of blogStatistics?.topTags; let i = index">
-                    <div
-                        *ngIf="i < 5"
-                        [ngClass]="{
-                            'bg-pink-100 text-pink-600': i % 4 === 0,
-                            'bg-blue-100 text-blue-600': i % 4 === 1,
-                            'bg-green-100 text-green-600': i % 4 === 2,
-                            'bg-yellow-100 text-yellow-600': i % 4 === 3
-                        }"
-                        class="border-round p-3 text-lg flex align-items-center gap-2"
-                    >
-                        <i class="pi pi-tag"></i>
-                        <span>{{ tag.name }}</span>
-                        <span class="text-base text-600">({{ tag.count }} veces)</span>
-                    </div>
-                </ng-container>
-            </div>
-        </div>
-    </div>
-    
-    
-    
 
-    <!-- Recent Blogs Section -->
-    <p-card class="surface-card p-1 border-round">
-        <div class="font-bold text-2xl text-primary mb-4">
-            Últimos Blogs Creados
-        </div>
-        <div class="p-dataview-content">
-            <div class="grid">
-                <div *ngFor="let blog of recentBlogs" class="col-12 md:col-4">
-                    <div class="p-2">
-                        <div
-                            class="surface-card border-round shadow-3 cursor-pointer"
-                            (click)="openArticleForm(blog._id)"
-                        >
-                            <div class="relative">
-                                <img
-                                    class="w-full border-round-top h-12rem"
-                                    style="object-fit: cover"
-                                    [src]="blog.image"
-                                    alt="Imagen del blog"
-                                />
-                            </div>
-                            <div class="p-3">
-                                <div class="text-900 font-semibold text-lg mb-2">
-                                    {{ blog.blogTitle }}
-                                </div>
-                                <div class="text-500 mb-2">
-                                    {{ blog.state }} | {{ blog.visibility }}
-                                </div>
-                                <div class="flex justify-content-between align-items-center text-secondary">
-                                    <i class="pi pi-calendar mr-1"></i>
-                                    {{ blog.date }}
-                                    <button
-                                        pButton
-                                        type="button"
-                                        class="p-button-text"
-                                        (click)="openArticleForm(blog._id)"
-                                        aria-label="Editar"
-                                        title="Editar"
-                                    >
-                                        <i class="pi pi-pencil text-secondary"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </p-card>
-    
-    
 </section>

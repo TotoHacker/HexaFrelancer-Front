@@ -24,7 +24,10 @@ export class AppTopBarComponent {
 
     items!: MenuItem[];
 
-    public currentUser!: any | null;
+    public currentUser: any | null = {
+        displayName :'Josué',
+        photoURL :'https://firebasestorage.googleapis.com/v0/b/cocity-loft.appspot.com/o/clients%2F98a6u3xynd7.jpeg?alt=media&token=73c217a9-6805-4465-bbae-121873353d60',
+    };
 
     @ViewChild('menubutton') menuButton!: ElementRef;
 
