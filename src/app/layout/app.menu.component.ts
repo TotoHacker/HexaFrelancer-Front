@@ -40,17 +40,17 @@ export class AppMenuComponent implements OnInit {
 
                 ],
             },
-            {
-                label: 'Mensajes',
-                items: [
-                    {
-                        label: 'Chat',
-                        icon: 'pi pi-fw pi-users',
-                        routerLink: ['/therapist/list'],
-                    },
+            // {
+            //     label: 'Mensajes',
+            //     items: [
+            //         {
+            //             label: 'Chat',
+            //             icon: 'pi pi-fw pi-users',
+            //             routerLink: ['/therapist/list'],
+            //         },
 
-                ],
-            },
+            //     ],
+            // },
             // {
             //     label: 'Horario del terapeuta',
             //     items: [

@@ -1,7 +1,7 @@
 <!-- @if (currentUser) { -->
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="">
-        <img src="/assets/isotipo.png" alt="logo">
+        <img src="/assets/hexafrelance.png" alt="logo">
     </a>
 
     <button #menubutton class="p-link layout-menu-button layout-topbar-button" style="margin: 0;"
@@ -18,6 +18,9 @@
 
     <div #topbarmenu class="layout-topbar-menu"
         [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        <button class="p-link layout-topbar-button mr-5">
+            <i class="pi pi-bell"></i>
+        </button>
         <p class="font-semibold mt-3 name-porfile">{{currentUser.displayName}}</p>
         <button class="p-link layout-topbar-button" (click)="menu.toggle($event)">
 

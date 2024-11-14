@@ -185,6 +185,23 @@ p {
    border-radius: 6px;
 }
 
+.input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+     small {
+         position: absolute;
+         left: 0px;
+         top: 102%;
+     }
+    // label {
+    //     font-size: 16px;
+    //     color: var(--primary-secondary);
+    //     font-weight: 600;
+    // }
+}
 
 .ng-tns-c63392258-4 .p-calendar .p-input-icon-rightt {
     width: 100% !important;

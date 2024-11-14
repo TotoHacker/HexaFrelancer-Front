@@ -1,1 +1,298 @@
-<p>proyect-form works!</p>
+<section>
+
+    <div class="pb-3">
+        <p-breadcrumb class="max-w-full" [model]="items">
+            <ng-template pTemplate="item" let-item>
+                <ng-container *ngIf="item.route; else elseBlock">
+                    <a [routerLink]="item.route" class="p-menuitem-link">
+                        <span [ngClass]="[ item.icon ? item.icon : '', 'text-color' ]"></span>
+                        <span class="text-primary font-semibold">{{ item.label }}</span>
+                    </a>
+                </ng-container>
+                <ng-template #elseBlock>
+                    <a [href]="item.url">
+                        <span class="text-color">{{ item.label }}</span>
+                    </a>
+                </ng-template>
+            </ng-template>
+        </p-breadcrumb>
+    </div>
+
+    <div class="pb-5 flex justify-content-between gap-3 flex-wrap">
+        <div>
+            <p class="font-bold text-4xl text-900">{{ isEditing ? " Actualizar Cliente" : "Crear Cliente" }}</p>
+        </div>
+        <div>
+            <div class="flex gap-3 flex-wrap">
+                <button pbutton pripple label="Delete" icon="pi pi-trash"
+                    class="p-button-danger p-button " [disabled]="isSending">
+                    <span class="p-button-icon p-button-icon-left pi pi-times" aria-hidden="true"></span>
+                    <span class="p-button-label">Cancelar</span>
+                    <span class="p-ink" aria-hidden="true" role="presentation"></span>
+                </button>
+                <button pButton pRipple [label]="isEditing ? 'Actualizar' : 'Crear'"
+                    [icon]=" isSending  ? 'pi pi-spinner pi-spin'  : isEditing ? 'pi pi-pencil' : 'pi pi-plus' "
+                    [disabled]="isSending">
+                    <!-- [disabled]="clientForm.invalid || isSending"> -->
+                    <span class="p-ink" aria-hidden="true" role="presentation"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <form [formGroup]="clientForm">
+
+            <div class="grid">
+
+                <div class="col-12 lg:col-8">
+                    <div class="animation" [ngClass]="{'active-animation': animation}">
+                        <div class="flex flex-column gap-4">
+
+                            <!-- GENERALES -->
+                            <p-card>
+                                <div>
+                                    <p class="text-3xl pb-4 font-bold text-primary line-height-1">Datos generales</p>
+                                </div>
+                                <div class="flex flex-column gap-4">
+
+                                    <div class="flex flex-column sm:flex-row gap-4 mb-3">
+                                        <div class="input">
+                                            <p-floatLabel>
+                                                <input formControlName="name" id="name" type="text" pInputText
+                                                    class="border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90"
+                                                    [ngClass]="{ 'ng-invalid ng-dirty': clientForm.get('name').invalid && clientForm.get('name').touched }" />
+                                                <label for="name" class="px-3">Nombre completo*</label>
+                                            </p-floatLabel>
+                                            <small [@enterAnimation]
+                                                *ngIf="clientForm.get('name').invalid && clientForm.get('name').touched"
+                                                class="text-red-500 text-xs font-semibold">
+                                                * {{getErrorMessage('name')}}
+                                            </small>
+                                        </div>
+                                        <div class="input">
+                                            <p-floatLabel>
+                                                <input formControlName="email" id="email" type="text" pInputText
+                                                    class="border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90"
+                                                    [ngClass]="{
+                                                            'ng-invalid ng-dirty':
+                                                                clientForm.get('email').invalid &&
+                                                                clientForm.get('email').touched
+                                                        }" />
+                                                <label for="email" class="px-3"><i class="pi pi-envelope mr-2"></i>
+                                                    Correo electrónico*</label>
+                                            </p-floatLabel>
+                                            <small [@enterAnimation]
+                                                *ngIf="clientForm.get('email').invalid && clientForm.get('email').touched"
+                                                class="text-red-500 text-xs font-semibold">
+                                                * {{ getErrorMessage('email') }}
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex flex-column sm:flex-row gap-4 mb-3">
+                                        <div class="input">
+                                            <p-floatLabel>
+                                                <input formControlName="mobilePhone" id="mobilePhone" type="text"
+                                                    minlength="10" maxlength="12" pInputText
+                                                    class="w-full border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90"
+                                                    [ngClass]="{ 'ng-invalid ng-dirty': clientForm.get('mobilePhone').invalid && clientForm.get('mobilePhone').touched }"
+                                                    (keypress)="validateNumber($event)" />
+                                                <label for="name" class="px-3"> <i class="pi pi-phone mr-2"></i>
+                                                    Celular*</label>
+                                            </p-floatLabel>
+                                            <small [@enterAnimation]
+                                                *ngIf="clientForm.get('mobilePhone').invalid && clientForm.get('mobilePhone').touched"
+                                                class="text-red-500 text-xs font-semibold">
+                                                * {{getErrorMessage('mobilePhone')}}
+                                            </small>
+                                        </div>
+                                        <div class="input">
+                                            <p-floatLabel>
+                                                <input formControlName="academic" id="academic" type="text" pInputText
+                                                    class="w-full border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90" />
+                                                <label for="academic" class="px-3"><i class="pi pi-file mr-2"></i>
+                                                    Título acadamico</label>
+                                            </p-floatLabel>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-column sm:flex-row gap-4">
+                                        <div class="input">
+                                            <p-floatLabel>
+                                            <input formControlName="facebook" id="facebook" type="text"
+                                                pInputText class="w-full border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90" >
+                                                <label for="facebook" class="px-3"><i class="pi pi-facebook mr-2"></i>Facebook</label>
+                                                </p-floatLabel>
+                                        </div>
+                                        <div class="input">
+                                            <p-floatLabel>
+                                            <input formControlName="instagram" id="instagram" type="text"
+                                                pInputText class="w-full border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90" >
+                                                <label for="instagram" class="px-3"><i class="pi pi-instagram mr-2"></i>Instagram</label>
+                                                </p-floatLabel>
+                                        </div>
+                                        <div class="input">
+                                            <p-floatLabel>
+                                            <input formControlName="link" id="link" type="text"
+                                                pInputText class="w-full border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90" >
+                                                <label for="link" class="px-3"><i class="pi pi-linkedin mr-2"></i>LinkedIn</label>
+                                                </p-floatLabel>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </p-card>
+                            <p-card>
+                                <div>
+                                    <p class="text-3xl pb-4 font-bold text-primary line-height-1">Contenido</p>
+                                </div>
+                                <div class="flex flex-column sm:flex-row gap-4 mb-6">
+                                    <div class="input">
+                                        <p-floatLabel>
+                                            <input formControlName="titleProyect" id="titleProyect" type="text" pInputText
+                                                class="border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90"
+                                                [ngClass]="{ 'ng-invalid ng-dirty': clientForm.get('titleProyect').invalid && clientForm.get('titleProyect').touched }" />
+                                            <label for="titleProyect" class="px-3">Titulo del proyecto*</label>
+                                        </p-floatLabel>
+                                        <small [@enterAnimation]
+                                            *ngIf="clientForm.get('titleProyect').invalid && clientForm.get('titleProyect').touched"
+                                            class="text-red-500 text-xs font-semibold">
+                                            * {{getErrorMessage('titleProyect')}}
+                                        </small>
+                                    </div>
+                                    <div class="input">
+                                        <p-floatLabel>
+                                            <input formControlName="price" id="price" type="text" pInputText
+                                                class="border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90"
+                                                [ngClass]="{ 'ng-invalid ng-dirty': clientForm.get('price').invalid && clientForm.get('price').touched }"
+                                                (keypress)="validateNumber($event)" />
+                                            <label for="price" class="px-3"><i class="pi pi-dollar mr-2"></i>Precio*</label>
+                                        </p-floatLabel>
+                                        <small [@enterAnimation]
+                                            *ngIf="clientForm.get('price').invalid && clientForm.get('price').touched"
+                                            class="text-red-500 text-xs font-semibold">
+                                            * {{getErrorMessage('price')}}
+                                        </small>
+                                    </div>
+                                </div>
+                                    <div class="input">
+                                        <p-floatLabel>
+
+
+                                                <textarea rows="5" cols="30" pInputTextarea [autoResize]="true" id="description"
+                                                formControlName="description"  class="border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90 h-6rem"
+                                                [ngClass]="{ 'ng-invalid ng-dirty': clientForm.get('description').invalid && clientForm.get('description').touched }"></textarea>
+                                                <label for="description" class="px-3 py-1">Breve descripción*</label>
+                                        </p-floatLabel>
+                                        <small [@enterAnimation]
+                                            *ngIf="clientForm.get('description').invalid && clientForm.get('description').touched"
+                                            class="text-red-500 text-xs font-semibold">
+                                            * {{getErrorMessage('description')}}
+                                        </small>
+                                    </div>
+
+                                    <div class="col-12 lg:col-12">
+                                        <span class="text-900 font-bold block  surface-border py-3">Contenido del proyecto*</span>
+                                        <ckeditor [editor]="Editor" formControlName="contentProyect" [config]="editorConfig" [ngClass]="{
+                                            'ng-invalid ng-dirty':
+                                                clientForm.get('contentProyect').invalid &&
+                                                clientForm.get('contentProyect').touched }">
+                                    </ckeditor>
+                                        <small *ngIf="
+                                            clientForm.get('contentProyect').invalid &&
+                                            clientForm.get('contentProyect').touched
+                                        " class="text-red-500 text-md font-semibold mt-1 flex items-center">
+                                            <i class="pi pi-exclamation-triangle mr-1"></i>
+                                            El contenido es obligatorio
+                                        </small>
+                                    </div>
+
+                            </p-card>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 lg:col-4 flex flex-column gap-4">
+                    <div class="sticky" style="top: 100px;">
+                        <p-card>
+                            <div>
+                                <p class="text-3xl pb-4 font-bold text-primary line-height-1">Otros datos</p>
+                            </div>
+                            <div class="flex flex-column gap-5">
+                                <div class="input mb-3">
+                                    <p-floatLabel>
+                                        <input formControlName="front" id="front" type="text" pInputText
+                                            class="border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90"
+                                            [ngClass]="{ 'ng-invalid ng-dirty': clientForm.get('front').invalid && clientForm.get('front').touched }" />
+                                        <label for="front" class="px-3">Tecnologia frontend</label>
+                                    </p-floatLabel>
+                                    <small [@enterAnimation]
+                                        *ngIf="clientForm.get('front').invalid && clientForm.get('front').touched"
+                                        class="text-red-500 text-xs font-semibold">
+                                        * {{getErrorMessage('front')}}
+                                    </small>
+                                </div>
+                                <div class="input mb-3">
+                                    <p-floatLabel>
+                                        <input formControlName="back" id="back" type="text" pInputText
+                                            class="border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90"
+                                            [ngClass]="{ 'ng-invalid ng-dirty': clientForm.get('back').invalid && clientForm.get('back').touched }" />
+                                        <label for="back" class="px-3">Tecnologia backend</label>
+                                    </p-floatLabel>
+                                    <small [@enterAnimation]
+                                        *ngIf="clientForm.get('back').invalid && clientForm.get('back').touched"
+                                        class="text-red-500 text-xs font-semibold">
+                                        * {{getErrorMessage('back')}}
+                                    </small>
+                                </div>
+                                <div class="input">
+                                    <p-floatLabel>
+                                        <input formControlName="db" id="db" type="text" pInputText
+                                            class="border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90"
+                                            [ngClass]="{ 'ng-invalid ng-dirty': clientForm.get('db').invalid && clientForm.get('db').touched }" />
+                                        <label for="db" class="px-3">Tecnologia Base de datos</label>
+                                    </p-floatLabel>
+                                    <small [@enterAnimation]
+                                        *ngIf="clientForm.get('db').invalid && clientForm.get('db').touched"
+                                        class="text-red-500 text-xs font-semibold">
+                                        * {{getErrorMessage('db')}}
+                                    </small>
+                                </div>
+                                <div class=" p-3 flex align-items-center border-round"
+                            [ngClass]="{
+                                'ngclass-blog-warning':
+                                    clientForm.get('state')?.value ===
+                                    'Borrador',
+                                'ngclass-blog-success':
+                                    clientForm.get('state')?.value ===
+                                    'Publicado'
+                            }">
+                                <span class="text-900 font-semibold mr-3">Estado:</span>
+                                <span class="font-medium">{{
+                                    clientForm.get("state")?.value
+                                    }}</span>
+                                <button pButton type="button" icon="pi pi-fw pi-pencil "
+                                    class="p-button-rounded p-button-text ml-auto p-button-icon-only animated-button bg-white"
+                                    (click)="toggleEstado()" [ngClass]="{
+                                        'p-button-secondary':
+                                            clientForm.get('state')?.value ===
+                                            'Borrador',
+                                        'p-button-success':
+                                            clientForm.get('state')?.value ===
+                                            'Publicado'
+                                    }"></button>
+                            </div>
+                            </div>
+                        </p-card>
+                    </div>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+</section>
+
+<p-confirmDialog key="client-confirm-dialog"></p-confirmDialog>
