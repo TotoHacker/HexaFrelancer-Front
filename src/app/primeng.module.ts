@@ -46,6 +46,7 @@ import { EditorModule } from 'primeng/editor';
 import { ChipsModule } from 'primeng/chips';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 
 const PrimeNgComponents = [
@@ -95,8 +96,8 @@ const PrimeNgComponents = [
     EditorModule,
     ChipsModule,
     InputGroupModule,
-    FloatLabelModule
-
+    FloatLabelModule,
+    OverlayPanelModule
 
 
 ];
