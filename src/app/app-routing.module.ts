@@ -19,7 +19,7 @@ import { ProyectDetailsComponent } from './main/modules/proyects/pages/proyect-d
                     path: '', component: AppLayoutComponent,
                     children: [
                         {
-                            path: '', redirectTo: 'dashboard', pathMatch: 'full',
+                            path: '', redirectTo: 'login', pathMatch: 'full',
                         },
                         {
                             path: 'dashboard', component: DashboardMainPageComponent,
@@ -40,7 +40,8 @@ import { ProyectDetailsComponent } from './main/modules/proyects/pages/proyect-d
                     loadChildren: () => import('./main/components/auth/auth-routing.module').then((m) => m.AuthRoutingModule),
                 },
                 { path: 'notfound', component: NotfoundComponent },
-                { path: 'login', component: SingUpComponent },
+                { path: 'login', component: LoginComponent },
+                { path: 'sing-up', component: SingUpComponent },
 
                 { path: '**', redirectTo: '/notfound' },
 
