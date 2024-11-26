@@ -8,6 +8,7 @@ import { SingUpComponent } from './main/components/auth/sing-up/sing-up.componen
 import { single } from 'rxjs';
 import { ProyectsRoutingModule } from './main/modules/proyects/proyects-routing.module';
 import { ProyectDetailsComponent } from './main/modules/proyects/pages/proyect-details/proyect-details.component';
+import { ProyectFormComponent } from './main/modules/proyects/pages/proyect-form/proyect-form.component';
 // import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({

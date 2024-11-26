@@ -25,14 +25,14 @@
         <div>
             <div class="flex gap-3 flex-wrap">
                 <button pbutton pripple label="Delete" icon="pi pi-trash"
-                    class="p-button-danger p-button " [disabled]="isSending">
+                    class="p-button-danger p-button " [disabled]="isSending" routerLink="/proyects/list">
                     <span class="p-button-icon p-button-icon-left pi pi-times" aria-hidden="true"></span>
                     <span class="p-button-label">Cancelar</span>
                     <span class="p-ink" aria-hidden="true" role="presentation"></span>
                 </button>
                 <button pButton pRipple [label]="isEditing ? 'Actualizar' : 'Crear'"
                     [icon]=" isSending  ? 'pi pi-spinner pi-spin'  : isEditing ? 'pi pi-pencil' : 'pi pi-plus' "
-                    [disabled]="isSending">
+                    [disabled]="isSending" routerLink="/proyects/list">
                     <!-- [disabled]="clientForm.invalid || isSending"> -->
                     <span class="p-ink" aria-hidden="true" role="presentation"></span>
                 </button>
