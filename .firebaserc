@@ -1,15 +1,16 @@
 {
   "projects": {
-    "default": "hexafrelancer-18bf3"
+    "default": "hexafrelance-2383d"
   },
   "targets": {
-    "hexafrelancer-18bf3": {
+    "hexafrelance-2383d": {
       "hosting": {
         "panel": [
-          "hexafrelancer-panel-administrador"
+          "hexafrelancer-panel"
         ]
       }
     }
   },
-  "etags": {}
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }

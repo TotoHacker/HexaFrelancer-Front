@@ -31,6 +31,7 @@
         "chart.js": "^4.4.3",
         "ckeditor5": "^43.0.0",
         "ckeditor5-premium-features": "^43.0.0",
+        "firebase": "^10.14.1",
         "primeflex": "^3.3.1",
         "primeicons": "6.0.1",
         "primeng": "^17.18.11",
