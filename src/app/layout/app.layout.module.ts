@@ -22,6 +22,7 @@ import { MenuModule } from 'primeng/menu';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogService } from 'primeng/dynamicdialog';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -49,6 +50,7 @@ import { CommonModule } from '@angular/common';
         ButtonModule,
         MenuModule,
         ConfirmDialogModule,
+        OverlayPanelModule,
     ],
     providers: [ConfirmationService, DialogService],
     exports: [AppLayoutComponent]

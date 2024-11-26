@@ -22,6 +22,12 @@ import { NewProfileModalComponent } from '../main/components/auth/login/new-prof
 })
 export class AppTopBarComponent {
 
+    members = [
+        { name: 'Amy Elsner', image: 'amyelsner.png', email: 'amy@email.com', role: 'Owner' },
+        { name: 'Bernardo Dominic', image: 'bernardodominic.png', email: 'bernardo@email.com', role: 'Editor' },
+        { name: 'Ioni Bowcher', image: 'ionibowcher.png', email: 'ioni@email.com', role: 'Viewer' }
+    ];
+
     items!: MenuItem[];
 
     public currentUser: any | null = {
