@@ -4,6 +4,7 @@ import { LoginService } from './service/login.service';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { NewProfileModalComponent } from '../main/components/auth/login/new-profile-modal/new-profile-modal.component';
+import { Router } from '@angular/router';
 // import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
@@ -46,6 +47,7 @@ export class AppTopBarComponent {
         private loginService: LoginService,
         private confirmationService: ConfirmationService,
         public dialogService: DialogService,
+        private router: Router,
         // private auth: AngularFireAuth,
     ) {
         // this.auth.authState.subscribe(async (auth) => {
@@ -81,19 +83,22 @@ export class AppTopBarComponent {
 
     async logout() {
         this.confirmationService.confirm({
-            key: "header-dialog",
-            header: "Confirmación",
-            message: '¿Estás seguro de que deseas cerrar la sesión?',
-            icon: 'pi pi-info-circle',
-            acceptButtonStyleClass: "p-button-danger p-button-text",
-            rejectButtonStyleClass: "p-button-text p-button-text",
-            acceptIcon: "none",
-            rejectIcon: "none",
-            acceptLabel: "Sí",
-            rejectLabel: "No",
-            accept: async () => await this.loginService.logout()
+          key: "header-dialog",
+          header: "Confirmación",
+          message: '¿Estás seguro de que deseas cerrar la sesión?',
+          icon: 'pi pi-info-circle',
+          acceptButtonStyleClass: "p-button-danger p-button-text",
+          rejectButtonStyleClass: "p-button-text p-button-text",
+          acceptIcon: "none",
+          rejectIcon: "none",
+          acceptLabel: "Sí",
+          rejectLabel: "No",
+          accept: async () => {
+            // Redirigir a la ruta de login
+            await this.router.navigate(['/login']);
+          }
         });
-    }
+      }
 
     openProfileModal() {
         const dialogRef = this.dialogService.open(NewProfileModalComponent, {
