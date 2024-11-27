@@ -1,51 +1,54 @@
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
 import { NotfoundComponent } from './main/components/notfound/notfound.component';
 import { AppLayoutComponent } from './layout/app.layout.component';
 import { DashboardMainPageComponent } from './main/modules/dashboard/pages/dashboard-main-page/dashboard-main-page.component';
 import { LoginComponent } from './main/components/auth/login/login.component';
 import { SingUpComponent } from './main/components/auth/sing-up/sing-up.component';
-import { single } from 'rxjs';
-import { ProyectsRoutingModule } from './main/modules/proyects/proyects-routing.module';
-import { ProyectDetailsComponent } from './main/modules/proyects/pages/proyect-details/proyect-details.component';
-import { ProyectFormComponent } from './main/modules/proyects/pages/proyect-form/proyect-form.component';
-// import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
     imports: [
         RouterModule.forRoot(
             [
+                // Ruta principal redirige al LoginComponent
                 {
-                    // canActivate: [AuthGuard],
-                    path: '', component: AppLayoutComponent,
+                    path: '',
+                    component: LoginComponent,
+                },
+                // Rutas protegidas detrás del layout principal
+                {
+                    path: '',
+                    component: AppLayoutComponent,
                     children: [
                         {
-                            path: '', redirectTo: 'login', pathMatch: 'full',
-                        },
-                        {
-                            path: 'dashboard', component: DashboardMainPageComponent,
+                            path: 'dashboard',
+                            component: DashboardMainPageComponent,
                         },
                         {
                             path: 'admins',
-                            loadChildren: () => import('./main/modules/administrators/admins-routing.module').then((m) => m.AdminsRoutingModule),
+                            loadChildren: () =>
+                                import('./main/modules/administrators/admins-routing.module').then((m) => m.AdminsRoutingModule),
                         },
                         {
                             path: 'proyects',
-                            loadChildren: () => import('./main/modules/proyects/proyects-routing.module').then((m) => m.ProyectsRoutingModule),
+                            loadChildren: () =>
+                                import('./main/modules/proyects/proyects-routing.module').then((m) => m.ProyectsRoutingModule),
                         },
-
                     ],
                 },
+                // Módulo de autenticación con carga diferida
                 {
                     path: 'auth',
-                    loadChildren: () => import('./main/components/auth/auth-routing.module').then((m) => m.AuthRoutingModule),
+                    loadChildren: () =>
+                        import('./main/components/auth/auth-routing.module').then((m) => m.AuthRoutingModule),
                 },
-                { path: 'notfound', component: NotfoundComponent },
-                { path: 'login', component: LoginComponent },
+                // Ruta adicional para registro de usuarios
                 { path: 'sing-up', component: SingUpComponent },
-
+                // Página de "No encontrado"
+                { path: 'notfound', component: NotfoundComponent },
+                // Redirección para rutas no válidas
                 { path: '**', redirectTo: '/notfound' },
-
             ],
             {
                 scrollPositionRestoration: 'enabled',
@@ -56,4 +59,4 @@ import { ProyectFormComponent } from './main/modules/proyects/pages/proyect-form
     ],
     exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

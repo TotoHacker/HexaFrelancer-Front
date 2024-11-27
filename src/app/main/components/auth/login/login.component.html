@@ -1,52 +1,42 @@
 <div class=" flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
     <div class="flex flex-column align-items-center justify-content-center">
-        <img src="/assets/hexafrelance.png"
-            alt="CardioTrack" class="mb-5 w-15rem flex-shrink-0">
-        <div
-            >
-            <div >
-
+        <img src="/assets/hexafrelance.png" alt="CardioTrack" class="mb-5 w-15rem flex-shrink-0">
+        <div>
+            <div>
                 <div class="text-center mb-5">
                     <div class="title text-4xl font-semibold mb-3">Inicio de sesión</div>
-                    <!-- <span class="text-600 font-medium">Inicia sesion para continuar</span> -->
                 </div>
 
                 <div>
-
                     <form [formGroup]="loginForm" class="flex flex-column gap-5">
-                        <div class="">
+                        <div>
                             <p-floatLabel>
-                            <input formControlName="email" id="email1" type="text"
-                                pInputText class="w-full border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90" >
-                                <label for="email1" class="px-3">Correo
-                                    electrónico</label>
-                                </p-floatLabel>
+                                <input formControlName="email" id="email1" type="text" pInputText
+                                    class="w-full border-round-3xl shadow-2 py-3 px-4 border-solid border-1 border-black-alpha-90" >
+                                <label for="email1" class="px-3">Correo electrónico</label>
+                            </p-floatLabel>
                         </div>
-                        <div class="">
+                        <div>
                             <p-floatLabel>
-                            <p-password [feedback]="false" formControlName="password" id="password1"
-                                 [toggleMask]="true"
-                                inputStyleClass="w-full py-3 px-4 md:w-30rem border-round-3xl shadow-1 border-solid border-1 border-black-alpha-90"></p-password>
+                                <p-password [feedback]="false" formControlName="password" id="password1"
+                                    [toggleMask]="true" inputStyleClass="w-full py-3 px-4 md:w-30rem border-round-3xl shadow-1 border-solid border-1 border-black-alpha-90"></p-password>
                                 <label for="password1" class="px-3">Contraseña</label>
                             </p-floatLabel>
                         </div>
                         <div class="flex flex-column gap-3">
                             <div class="flex align-items-center justify-content-end gap-5">
                                 <a class="font-medium no-underline ml-2 text-right cursor-pointer"
-                                    style="color: var(--primary-color)" (click)="recoverPassword()">¿Olvidaste tu
-                                    contraseña?</a>
+                                    style="color: var(--primary-color)" (click)="recoverPassword()">¿Olvidaste tu contraseña?</a>
                             </div>
-                            <button pButton pRipple label="Iniciar sesión" class="w-full p-3 text-xl border-round-3xl" [loading]="loader"
-                                style="background-color: var(--primary-color); border: none;"
-                                routerLink="/dashboard"></button>
+                            <button pButton pRipple label="Iniciar sesión" class="w-full p-3 text-xl border-round-3xl"
+                                [loading]="loader" style="background-color: var(--primary-color); border: none;" (click)="submitForm($event)"></button>
                             <div class="flex justify-content-center mt-4">
-                                <button pButton pRipple label="Registrate" class="w-6 p-3 text-xl border-round-3xl" [loading]="loader"
-                                style="background-color: var(--primary-color); border: none;" routerLink="/sing-up"></button>
+                                <button pButton pRipple label="Registrate" class="w-6 p-3 text-xl border-round-3xl"
+                                    [loading]="loader" style="background-color: var(--primary-color); border: none;" routerLink="/sing-up"></button>
                             </div>
                         </div>
                         <p-messages *ngIf="showMessages" [value]="msgs"></p-messages>
                     </form>
-
                 </div>
             </div>
         </div>

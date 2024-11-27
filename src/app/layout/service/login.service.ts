@@ -1,142 +1,81 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { first, firstValueFrom } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-// import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
-import firebase from 'firebase/compat/app';
-import { Admin } from '../../main/modules/administrators/models/admin.model';
-import { DefaultResponse } from '../../shared/models/http.model';
-import { AdminsService } from 'src/app/main/modules/administrators/services/admins.service';
-
-export interface Authenticated {
-    res?: boolean;
-    user?: any;
-    // user?: firebase.User;
-    userType?: string;
-}
-
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-
 export class LoginService {
+  private readonly USERS_URL: string = `${environment.URL_API}/users`;
+  private readonly RECOVERY_URL: string = `${environment.URL_API}/recovery`;
 
-    private ADMIN_URI: string = `${environment.URL_API}/admins/`;
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
-    constructor(
-        private http: HttpClient,
-        // private firebase: AngularFirestore,
-        // private auth: AngularFireAuth,
-        private router: Router,
-        private adminService: AdminsService,
-    ) { }
-
-
-    // async isAuthenticated(): Promise<Authenticated> {
-    async isLoggedIn(): Promise<any> {
-        // const user = await firstValueFrom(this.auth.authState.pipe(first()));
-        // if (user) {
-        //     const token = await user.getIdTokenResult()
-        //     const userType = token.claims['role'];
-        //     // console.log("userType", userType)
-        //     if (userType !== 'Administrador' && userType !== 'Editor' && userType !== 'Vendedor') {
-        //         await this.auth.signOut();
-        //     }
-        //     // this.router.navigate(['/dashboard']);
-        //     return { res: true, user: user, userType: userType };
-        // } else {
-        //     return { res: false };
-        // }
-
-        // return { res: true, user: 'user', userType: 'Administrador' };
-        // return { res: false };
+  // Método para enviar el email de recuperación de contraseña
+  async sendRecoveryEmail(email: string): Promise<any> {
+    try {
+      const response = await this.http.post<any>(this.RECOVERY_URL, { email }).toPromise();
+      return response; // Asegúrate de que el servidor devuelva la respuesta adecuada
+    } catch (error) {
+      console.error('Error enviando el correo de recuperación', error);
+      throw new Error('Ocurrió un error al intentar enviar el correo de recuperación');
     }
+  }
 
-    async login(email: string, password: string) {
-        // try {
-        //     const sigInSnapshot = await this.auth.signInWithEmailAndPassword(
-        //         email,
-        //         password
-        //     );
-        //     await this.isLoggedIn();
-        //     if (!sigInSnapshot.user) {
-        //         // console.log(sigInSnapshot);
-        //         throw false;
-        //     }
-        // } catch (error: any) {
-        //     console.log(error);
-        //     let errorMessage;
-        //     switch (error.code) {
-        //         case "auth/user-not-found":
-        //             errorMessage = "No existe una cuenta creada con el correo ingresado"
-        //             break;
+  // Método de login
+  async login(email: string, password: string): Promise<void> {
+    try {
+      // Obtener todos los usuarios
+      const users: any[] = await this.http.get<any[]>(this.USERS_URL).toPromise();
 
-        //         case "auth/invalid-email":
-        //             errorMessage = "Correo electrónico incorrecto"
-        //             break;
+      // Verificar credenciales
+      const user = users.find(u => u.email === email && u.password === password);
 
-        //         case "auth/wrong-password":
-        //             errorMessage = "Contraseña incorrecta"
-        //             break;
-
-        //         case "auth/invalid-password":
-        //             errorMessage = "Contraseña inválida"
-        //             break;
-
-        //         case "auth/too-many-requests":
-        //             errorMessage = "Cuenta inhabilitada temporalmente"
-        //             break;
-
-        //         default:
-        //             errorMessage = "Ocurrió un error, intente nuevamente"
-        //             break;
-        //     }
-
-        //     if (error.code == undefined) {
-        //         errorMessage = "No existe una cuenta con el correo ingresado."
-        //     }
-        //     throw { error: true, message: errorMessage };
-        // }
-    }
-
-    async logout(): Promise<any> {
-        // try {
-        //     this.router.navigate(['/login']);
-        //     return await this.auth.signOut();
-        // } catch (error) {
-        //     throw error;
-        // }
-    }
-
-    async getAdminFromMongo(): Promise<Admin> {
-        try {
-          let admin = await this.isLoggedIn()
-          let adminUid = admin?.user?.uid;
-          let response = await firstValueFrom(this.http.get<DefaultResponse>(`${this.ADMIN_URI}get/${adminUid}`));
-          return response!.data
-        } catch (error) {
-          console.log(error);
-          throw error;
-        }
+      if (!user) {
+        throw new Error('Correo o contraseña incorrectos');
       }
 
-      async sendRecoveryEmail(email: string): Promise<any> {
-        // try {
-        //   const response = await this.adminService.checkIfEmailExist(email);
+      // Mostrar los detalles del usuario en consola
+      console.log('Usuario logueado:');
+      console.log('ID:', user.user_id);
+      console.log('Correo:', user.email);
+      console.log('Contraseña:', user.password);  // Ten en cuenta que mostrar la contraseña en consola no es recomendable en un entorno de producción
 
-        //   if (response) {
-        //     await this.auth.sendPasswordResetEmail(email);
-        //     return { res: true };
-        //   } else {
-        //     return { res: false, message: "No existe una cuenta vinculada a ese correo" };
-        //   }
-        // } catch (error) {
-        //   console.error('Error sending recovery email:', error);
-        //   return { res: false, message: "Ocurrió un error inesperado" };
-        // }
+      // Guardar el user_id en localStorage
+      localStorage.setItem('userId', user.user_id.toString());
+
+      // Redirigir al dashboard
+      this.router.navigate(['dashboard']);
+    } catch (error: any) {
+      console.error('Error en el login', error);
+
+      // Manejar errores
+      let errorMessage = 'Ocurrió un error inesperado';
+      if (error.message === 'Correo o contraseña incorrectos') {
+        errorMessage = error.message;
       }
+      throw new Error(errorMessage);
+    }
+  }
 
+  // Método de logout
+  logout(): void {
+    localStorage.removeItem('userId');
+    this.router.navigate(['/login']);
+  }
+
+  // Verificar si el usuario está logueado
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('userId');
+  }
+
+  // Obtener el ID del usuario autenticado
+  getUserId(): number | null {
+    const userId = localStorage.getItem('userId');
+    return userId ? parseInt(userId, 10) : null;
+  }
 }

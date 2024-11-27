@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
@@ -8,12 +8,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { LoginService } from 'src/app/layout/service/login.service';
-import { MediaService } from 'src/app/layout/service/media/media.service';
-import { Admin } from 'src/app/main/modules/administrators/models/admin.model';
-import { AdminsService } from 'src/app/main/modules/administrators/services/admins.service';
 import { ToastService } from 'src/app/main/services/toast.service';
-
 
 interface CustomImage {
     file: File;
@@ -36,10 +31,10 @@ interface CustomImage {
     selector: 'app-new-profile-modal',
     templateUrl: './new-profile-modal.component.html',
     styles: [
-        `
+        ` 
         ::ng-deep .p-progress-spinner {
-        width: 40px !important;
-        height: 40px !important;
+            width: 40px !important;
+            height: 40px !important;
         }
 
         ::ng-deep #uploadBtn .p-button .p-button-icon-left {
@@ -53,6 +48,7 @@ interface CustomImage {
             background-color: white;
             border: none;
         }
+
         ::ng-deep #uploadBtn .p-button :hover {
             padding: 0;
             font-size: 12px;
@@ -65,21 +61,17 @@ interface CustomImage {
 })
 export class NewProfileModalComponent implements OnInit {
 
-    public user?: Admin;
     public isLoading = false;
+    public loadingInfo: boolean = false; // Definido para gestionar el estado de carga
+    public user: any; // Propiedad para almacenar la información del usuario
     public form: FormGroup;
-    public loadingInfo = true;
     public tmpImage?: CustomImage;
     public oldImage?: string;
 
     constructor(
         private formBuilder: FormBuilder,
-        private authService: LoginService,
-        private adminsService: AdminsService,
         private toastService: ToastService,
-        public ref: DynamicDialogRef,
-        private mediaService: MediaService,
-
+        public ref: DynamicDialogRef
     ) {
         this.form = this.formBuilder.group({
             name: new FormControl('', Validators.required),
@@ -96,43 +88,49 @@ export class NewProfileModalComponent implements OnInit {
         });
     }
 
-    async ngOnInit(): Promise<void> {
-        this.user = await this.getUser();
-        this.oldImage = this.user.photoURL;
-        this.form.patchValue(this.user);
-        this.loadingInfo = false;
+    ngOnInit(): void {
+        this.loadUserProfile();
     }
 
-    async getUser(): Promise<Admin> {
-        const user = await this.authService.getAdminFromMongo();
-        return user;
+    loadUserProfile(): void {
+        this.loadingInfo = true; // Empieza la simulación de carga
+
+        // Simula datos de usuario cargados
+        const mockUser = {
+            name: 'John Doe',
+            email: 'johndoe@example.com',
+            phone: '1234567890',
+            photoURL: 'https://via.placeholder.com/150',
+        };
+
+        this.user = mockUser; // Asigna los datos del usuario
+        this.oldImage = mockUser.photoURL;
+        this.form.patchValue(mockUser);
+
+        this.loadingInfo = false; // Finaliza la simulación de carga
     }
 
-    async validateForm() {
+    validateForm(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
             return;
         }
 
-        await this.updateAdmin();
+        this.updateProfile();
     }
 
-    async updateAdmin(): Promise<void> {
+    updateProfile(): void {
         try {
             this.isLoading = true;
             const formValues = this.form.value;
-            this.user!.name = formValues.name;
-            this.user!.phone = formValues.phone;
-            if (this.tmpImage != undefined) {
-                let url = await this.mediaService.uploadImg(this.tmpImage.file, this.user!.uid!, "perfil");
-                this.user!.photoURL = url;
-            }
-            const response = await this.adminsService.updateAdmin(this.user, this.user!.uid!);
-            if (response?.status == 200) {
-                this.toastService.showSuccess('Información actualizada correctamente');
-                this.isLoading = false;
-                this.ref.close(true);
-            }
+
+            // Simula el guardado del perfil
+            console.log('Perfil actualizado:', formValues);
+
+            // Simula una notificación de éxito
+            this.toastService.showSuccess('Información actualizada correctamente');
+            this.isLoading = false;
+            this.ref.close(true);
         } catch (error) {
             this.isLoading = false;
             this.toastService.showError('Ocurrió un error', 'Favor de intentarlo nuevamente');
@@ -140,14 +138,13 @@ export class NewProfileModalComponent implements OnInit {
         }
     }
 
-    async onUpload($event: any) {
+    onUpload($event: any): void {
         const file: File = $event.files[0];
         const reader = new FileReader();
         reader.onload = (e: any) => {
             // Set image src
-            this.tmpImage = { file: file, image: e.target.result };
+            this.tmpImage = { file, image: e.target.result };
         };
         reader.readAsDataURL(file);
     }
-
 }
