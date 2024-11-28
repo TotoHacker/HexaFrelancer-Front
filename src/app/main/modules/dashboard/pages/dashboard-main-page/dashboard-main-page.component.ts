@@ -13,6 +13,7 @@ import { BlogEntry } from '../../../blog/models/blog-models.model';
 import { PrimeNgModule } from 'src/app/primeng.module';
 import { ChartModule } from 'primeng/chart';
 import { CarouselModule } from 'primeng/carousel';
+import { ProyectService } from '../../../proyects/services/proyects.service';
 
 @Component({
     standalone: true,
@@ -39,60 +40,15 @@ export class DashboardMainPageComponent implements OnInit {
         photoURL: 'https://firebasestorage.googleapis.com/v0/b/cocity-loft.appspot.com/o/clients%2F98a6u3xynd7.jpeg?alt=media&token=73c217a9-6805-4465-bbae-121873353d60',
     };
 
-    constructor() { }
-    data2: any;
-    options2: any;
+    public loader: boolean = true;
 
-    products: any[] = [
-        {
-            id: '1000',
-            code: 'f230fh0g3',
-            name: 'Bamboo Watch',
-            description: 'Product Description',
-            image: 'bamboo-watch.jpg',
-            price: 65,
-            category: 'Accessories',
-            quantity: 24,
-            inventoryStatus: 'INSTOCK',
-            rating: 5
-        },
-        {
-            id: '1000',
-            code: 'f230fh0g3',
-            name: 'Bamboo Watch',
-            description: 'Product Description',
-            image: 'bamboo-watch.jpg',
-            price: 65,
-            category: 'Accessories',
-            quantity: 24,
-            inventoryStatus: 'INSTOCK',
-            rating: 5
-        },
-        {
-            id: '1000',
-            code: 'f230fh0g3',
-            name: 'Bamboo Watch',
-            description: 'Product Description',
-            image: 'bamboo-watch.jpg',
-            price: 65,
-            category: 'Accessories',
-            quantity: 24,
-            inventoryStatus: 'INSTOCK',
-            rating: 5
-        },
-        {
-            id: '1000',
-            code: 'f230fh0g3',
-            name: 'Bamboo Watch',
-            description: 'Product Description',
-            image: 'bamboo-watch.jpg',
-            price: 65,
-            category: 'Accessories',
-            quantity: 24,
-            inventoryStatus: 'INSTOCK',
-            rating: 5
-        },
-    ];
+    constructor(
+        private toastService: ToastService,
+        private router: Router,
+        public proyectService: ProyectService,
+    ) { }
+
+    proyects: any[] = [];
 
     responsiveOptions: any[] = [
         {
@@ -113,63 +69,23 @@ export class DashboardMainPageComponent implements OnInit {
     ];;
 
     ngOnInit() {
-        const documentStyle = getComputedStyle(document.documentElement);
-        const textColor = documentStyle.getPropertyValue('--text-color');
-        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-        this.data2 = {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
-            datasets: [
-                {
-                    label: 'Mensajes',
-                    backgroundColor: documentStyle.getPropertyValue('--blue-500'),
-                    borderColor: documentStyle.getPropertyValue('--blue-500'),
-                    data: [65, 59, 80, 81, 56, 55, 40]
-                },
-                {
-                    label: 'Completados',
-                    backgroundColor: documentStyle.getPropertyValue('--pink-500'),
-                    borderColor: documentStyle.getPropertyValue('--pink-500'),
-                    data: [28, 48, 40, 19, 86, 27, 90]
-                }
-            ]
-        };
+        this.getProyects();
+    }
 
-        this.options2 = {
-            indexAxis: 'y',
-            maintainAspectRatio: false,
-            aspectRatio: 0.8,
-            plugins: {
-                legend: {
-                    labels: {
-                        color: textColor
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: textColorSecondary,
-                        font: {
-                            weight: 500
-                        }
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                }
-            }
-
+    async getProyects(): Promise<void> {
+        try {
+            let response = await this.proyectService.getProyectEntries();
+            console.log(response);
+            this.proyects = response;
+        } catch (error) {
+            console.log(error);
+            this.toastService.showError('Error', 'Ocurrio un problema al realizar la consulta')
+        } finally {
+            this.loader = false;
         }
+    }
+
+    openAdminDetails(admin?: any) {
+        this.router.navigate(['/proyects/proyectDetail/' + admin.project_id]);
     }
 }

@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { CardModule } from 'primeng/card';
-import { AdminsService } from '../../../administrators/services/admins.service';
 import { Admin } from '../../../administrators/models/admin.model';
 import { ToastService } from 'src/app/main/services/toast.service';
 import { Table, TableModule } from 'primeng/table';
@@ -14,6 +13,7 @@ import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { AdminFormComponent } from '../../../administrators/pages/admin-form/admin-form.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ProyectService } from '../../services/proyects.service';
 
 @Component({
   selector: 'app-proyects-main-page',
@@ -39,25 +39,26 @@ export class ProyectsMainPageComponent {
 
     public items: MenuItem[] | undefined;
     public loader: boolean = true;
-    public admins: Array<Admin> = [];
+    public proyects: Array<Admin> = [];
 
     constructor(
-        private adminsService: AdminsService,
         private toastService: ToastService,
+        public proyectService: ProyectService,
         public dialogService: DialogService,
         private confirmationService: ConfirmationService,
+        private router: Router,
     ) { }
 
     ngOnInit() {
-        this.items = [{ icon: 'pi pi-home', route: '/' }, { label: 'Administradores', route: '/admins/list' }];
-        this.getAdmins();
+        this.items = [{ icon: 'pi pi-home', route: '/' }, { label: 'Administradores', route: '/proyects/list' }];
+        this.getProyects();
     }
 
-    async getAdmins(): Promise<void> {
+    async getProyects(): Promise<void> {
         try {
-            let response = await this.adminsService.getAllAdmins();
+            let response = await this.proyectService.getProyectEntries();
             console.log(response);
-            this.admins = response;
+            this.proyects = response;
         } catch (error) {
             console.log(error);
             this.toastService.showError('Error', 'Ocurrio un problema al realizar la consulta')
@@ -84,8 +85,8 @@ export class ProyectsMainPageComponent {
                 try {
                     this.loader = true;
                     // await this.logDeleteAdmin(admin._id!, this.currentUser);
-                    await this.adminsService.deleteAdmin(admin.uid!);
-                    await this.getAdmins();
+                    await this.proyectService.deleteProyectEntry(admin.uid!);
+                    await this.getProyects();
                     this.toastService.showSuccess('Administrador eliminado correctamente');
                 } catch (error) {
                     console.log(error);
@@ -98,24 +99,13 @@ export class ProyectsMainPageComponent {
 
     }
 
-    openAdminForm(admin?: Admin) {
-        const dialogRef = this.dialogService.open(AdminFormComponent, {
-            header: admin == undefined ? 'Nuevo administrador' : "Editar administrador",
-            contentStyle: {
-                overflow: 'auto',
-                width: '300px',
-                // maxWidth: '90vh',
-            },
-            baseZIndex: 10000,
-            data: {
-                admin
-            }
-        });
-        dialogRef.onClose.subscribe(async (reload: boolean) => {
-            if (reload) {
-                await this.getAdmins();
-            }
-        });
+    openAdminForm(admin?: any) {
+        this.router.navigate(['/proyects/list']);
+
+    }
+
+    openAdminDetails(admin?: any) {
+        this.router.navigate(['/proyects/proyectDetail/' + admin.project_id]);
     }
 
     onGlobalFilter(table: Table, event: Event) {

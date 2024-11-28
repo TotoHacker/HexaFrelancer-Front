@@ -9,7 +9,7 @@ import { ProyectDetailsComponent } from './pages/proyect-details/proyect-details
         RouterModule.forChild([
             { path: 'list', component: ProyectsMainPageComponent },
             { path: 'new', component: ProyectFormComponent },
-            { path: 'proyectDetail', component: ProyectDetailsComponent },
+            { path: 'proyectDetail/:id', component: ProyectDetailsComponent },
             { path: '**', redirectTo: '/notfound' },
         ]),
     ],
