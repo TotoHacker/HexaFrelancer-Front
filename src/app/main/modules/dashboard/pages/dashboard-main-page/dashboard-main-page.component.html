@@ -37,7 +37,7 @@
                     </div>
                     <div>
                         <p class="font-semibold text-xl">Total de solicitudes</p>
-                        <p class="font-semibold text-4xl">12</p>
+                        <p class="font-semibold text-4xl">{{notificacion.length}}</p>
                     </div>
                 </div>
             </p-card>
@@ -58,7 +58,8 @@
                             <div class="border-1 surface-border border-round m-2 p-3">
                                 <div class="mb-3">
                                     <div class="relative mx-auto">
-                                        <img src="https://primefaces.org/cdn/primeng/images/demo/proyect/bamboo-watch.jpg"
+                                        <img style="object-fit: cover;" height="200"
+                                            src="https://images.unsplash.com/photo-1517463700628-5103184eac47?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGltZSUyMHdhdGNofGVufDB8fDB8fHww"
                                             [alt]="proyect.title" class="w-full border-round" />
                                     </div>
                                 </div>
@@ -70,7 +71,8 @@
                                         {{ proyect.budget | currency}}
                                     </div>
                                     <span>
-                                        <p-button icon="pi pi-eye" severity="secondary" [outlined]="true" (onClick)="openAdminDetails(proyect)"/>
+                                        <p-button icon="pi pi-eye" severity="secondary" [outlined]="true"
+                                            (onClick)="openAdminDetails(proyect)" />
                                         <!-- <p-button icon="pi pi-shopping-cart" styleClass="ml-2" /> -->
                                     </span>
                                 </div>

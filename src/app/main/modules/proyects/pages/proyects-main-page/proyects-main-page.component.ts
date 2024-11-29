@@ -16,24 +16,24 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ProyectService } from '../../services/proyects.service';
 
 @Component({
-  selector: 'app-proyects-main-page',
-  standalone: true,
-  imports: [
-    CardModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    BreadcrumbModule,
-    TableModule,
-    ButtonModule,
-    DynamicDialogModule,
-    InputTextModule,
-    ConfirmDialogModule,
-],
-providers: [DialogService, ConfirmationService],
-  templateUrl: './proyects-main-page.component.html',
-  styleUrl: './proyects-main-page.component.scss'
+    selector: 'app-proyects-main-page',
+    standalone: true,
+    imports: [
+        CardModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        BreadcrumbModule,
+        TableModule,
+        ButtonModule,
+        DynamicDialogModule,
+        InputTextModule,
+        ConfirmDialogModule,
+    ],
+    providers: [DialogService, ConfirmationService],
+    templateUrl: './proyects-main-page.component.html',
+    styleUrl: './proyects-main-page.component.scss'
 })
 export class ProyectsMainPageComponent {
 
@@ -50,7 +50,7 @@ export class ProyectsMainPageComponent {
     ) { }
 
     ngOnInit() {
-        this.items = [{ icon: 'pi pi-home', route: '/' }, { label: 'Administradores', route: '/proyects/list' }];
+        this.items = [{ icon: 'pi pi-home', route: '/' }, { label: 'Proyectos', route: '/proyects/list' }];
         this.getProyects();
     }
 
@@ -67,12 +67,12 @@ export class ProyectsMainPageComponent {
         }
     }
 
-    async confirmDelete(admin: Admin) {
+    async confirmDelete(admin: any) {
         console.log('xd');
         this.confirmationService.confirm({
             key: "admin-confirm-dialog",
             header: "Confirmación",
-            message: '¿Está seguro que desea eliminar este administrador?',
+            message: '¿Está seguro que desea eliminar este proyecto?',
             icon: 'pi pi-info-circle',
             acceptButtonStyleClass: "p-button-danger p-button-text",
             rejectButtonStyleClass: "p-button-text p-button-text",
@@ -85,7 +85,9 @@ export class ProyectsMainPageComponent {
                 try {
                     this.loader = true;
                     // await this.logDeleteAdmin(admin._id!, this.currentUser);
-                    await this.proyectService.deleteProyectEntry(admin.uid!);
+                    console.log(admin);
+
+                    await this.proyectService.deleteProyectEntry(admin.project_id);
                     await this.getProyects();
                     this.toastService.showSuccess('Administrador eliminado correctamente');
                 } catch (error) {
@@ -94,7 +96,7 @@ export class ProyectsMainPageComponent {
                 } finally {
                     this.loader = false;
                 }
-            },
+            }
         });
 
     }

@@ -41,6 +41,8 @@ export class DashboardMainPageComponent implements OnInit {
     };
 
     public loader: boolean = true;
+    public notificacion: any[];
+
 
     constructor(
         private toastService: ToastService,
@@ -70,6 +72,7 @@ export class DashboardMainPageComponent implements OnInit {
 
     ngOnInit() {
         this.getProyects();
+        this.getNotificacion();
     }
 
     async getProyects(): Promise<void> {
@@ -82,6 +85,16 @@ export class DashboardMainPageComponent implements OnInit {
             this.toastService.showError('Error', 'Ocurrio un problema al realizar la consulta')
         } finally {
             this.loader = false;
+        }
+    }
+
+    async getNotificacion() {
+        try {
+            let response = await this.proyectService.getNotificacion();
+            console.log(response);
+            this.notificacion = response;
+        } catch (error) {
+            console.log(error);
         }
     }
 

@@ -58,6 +58,7 @@ import {
     LinkImage,
     Alignment,
 } from 'ckeditor5';
+import { ProyectService } from '../../services/proyects.service';
 
 interface CustomImage {
     file: File;
@@ -65,51 +66,51 @@ interface CustomImage {
 }
 
 @Component({
-  selector: 'app-proyect-form',
-  standalone: true,
-  imports: [
-    CardModule,
-    FormsModule,
-    CommonModule,
-    ReactiveFormsModule,
-    InputTextModule,
-    SelectButtonModule,
-    ToggleButtonModule,
-    DropdownModule,
-    CalendarModule,
-    IconFieldModule,
-    InputIconModule,
-    BreadcrumbModule,
-    FileUploadModule,
-    InputTextareaModule,
-    ConfirmDialogModule,
-    MultiSelectModule,
-    AvatarModule,
-    InputNumberModule,
-    FloatLabelModule,
-    CKEditorModule,
-],
-providers: [ConfirmationService],
-  templateUrl: './proyect-form.component.html',
-  styleUrl: './proyect-form.component.scss',
-  animations: [
-    trigger('enterAnimation', [
-        transition(':enter', [
-            style({ transform: 'translateY(-50%)', opacity: 0 }),
-            animate(
-                '150ms',
-                style({ transform: 'translateY(0)', opacity: 1 })
-            ),
+    selector: 'app-proyect-form',
+    standalone: true,
+    imports: [
+        CardModule,
+        FormsModule,
+        CommonModule,
+        ReactiveFormsModule,
+        InputTextModule,
+        SelectButtonModule,
+        ToggleButtonModule,
+        DropdownModule,
+        CalendarModule,
+        IconFieldModule,
+        InputIconModule,
+        BreadcrumbModule,
+        FileUploadModule,
+        InputTextareaModule,
+        ConfirmDialogModule,
+        MultiSelectModule,
+        AvatarModule,
+        InputNumberModule,
+        FloatLabelModule,
+        CKEditorModule,
+    ],
+    providers: [ConfirmationService],
+    templateUrl: './proyect-form.component.html',
+    styleUrl: './proyect-form.component.scss',
+    animations: [
+        trigger('enterAnimation', [
+            transition(':enter', [
+                style({ transform: 'translateY(-50%)', opacity: 0 }),
+                animate(
+                    '150ms',
+                    style({ transform: 'translateY(0)', opacity: 1 })
+                ),
+            ]),
+            transition(':leave', [
+                style({ transform: 'translateY(0)', opacity: 1 }),
+                animate(
+                    '150ms',
+                    style({ transform: 'translateY(-50%)', opacity: 0 })
+                ),
+            ]),
         ]),
-        transition(':leave', [
-            style({ transform: 'translateY(0)', opacity: 1 }),
-            animate(
-                '150ms',
-                style({ transform: 'translateY(-50%)', opacity: 0 })
-            ),
-        ]),
-    ]),
-],
+    ],
 })
 export class ProyectFormComponent {
     public items: MenuItem[] | undefined;
@@ -123,13 +124,14 @@ export class ProyectFormComponent {
 
     constructor(
         private fb: FormBuilder,
+        private service: ProyectService,
     ) {
         this.clientForm = this.fb.group({
 
             name: ['', Validators.required],
             email: ['', [Validators.required, Validators.pattern('^[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,6}$'),],],
             mobilePhone: ['', Validators.required],
-            academic: ['', ],
+            academic: ['',],
             titleProyect: ['', Validators.required],
             price: ['', Validators.required],
             description: ['', Validators.required],
@@ -264,6 +266,31 @@ export class ProyectFormComponent {
         this.clientForm.get('state')?.setValue(this.estado);
     }
 
+    async create() {
+        try {
+
+            let userId = localStorage.getItem('userId'); // Asume que 'userId' es la clave donde se guarda el ID del usuario
+            console.log(userId);
+
+            let form = this.clientForm.value;
+            // const userId = localStorage.getItem('userId');
+            const value = {
+                user_id: null,
+                title: form.titleProyect,
+                description: form.description,
+                budget: form.budget,
+                status: 'Open',
+                deadline: form.deadline,
+            };
+
+            let response = await this.service.createProyectEntry(value)
+
+        } catch (error) {
+            console.log(error);
+
+
+        }
+    }
 
 
 }

@@ -29,21 +29,11 @@
                     <span class="font-bold text-bluegray-700 text-900 block mb-2 ">Notificaciones</span>
                 </div>
                 <div class="flex flex-column gap-3 overflow-auto" style="height: 200px;">
+                    @for (item of notificacion; track $index) {
                     <div class=" bg-gray-300 border-round-3xl p-3">
-                        <p>Quiero comprar tu proyecto :)</p>
+                        <p>{{item.proposal_text ?? "I have experience building apps similar to this. Let's collaborate."}}</p>
                     </div>
-                    <div class="bg-gray-300 border-round-3xl p-3">
-                        <p>Quiero comprar tu proyecto :)</p>
-                    </div>
-                    <div class="bg-gray-300 border-round-3xl p-3">
-                        <p>Quiero comprar tu proyecto :)</p>
-                    </div>
-                    <div class="bg-gray-300 border-round-3xl p-3">
-                        <p>Quiero comprar tu proyecto :)</p>
-                    </div>
-                    <div class="bg-gray-300 border-round-3xl p-3">
-                        <p>Quiero comprar tu proyecto :)</p>
-                    </div>
+                    }
                 </div>
             </div>
         </p-overlayPanel>

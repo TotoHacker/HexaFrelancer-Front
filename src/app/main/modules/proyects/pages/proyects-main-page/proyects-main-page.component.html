@@ -27,7 +27,7 @@
         <div class="table">
             <p-table #dt [value]="proyects" [scrollable]="true" scrollHeight="500px" [rowHover]="true" [rows]="10"
                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loader" [paginator]="true"
-                currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} administradores"
+                currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} proyectos"
                 [filterDelay]="0" [globalFilterFields]="['name', 'userType', 'email', 'phone']">
                 <ng-template pTemplate="caption" class="flex">
                     <div class="flex align-content-center flex-wrap gap-3 justify-content-between">

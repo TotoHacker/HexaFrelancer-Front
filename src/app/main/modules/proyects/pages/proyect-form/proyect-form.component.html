@@ -32,7 +32,7 @@
                 </button>
                 <button pButton pRipple [label]="isEditing ? 'Actualizar' : 'Crear'"
                     [icon]=" isSending  ? 'pi pi-spinner pi-spin'  : isEditing ? 'pi pi-pencil' : 'pi pi-plus' "
-                    [disabled]="isSending" routerLink="/proyects/list">
+                    [disabled]="isSending" routerLink="/proyects/list" (click)="create()">
                     <!-- [disabled]="clientForm.invalid || isSending"> -->
                     <span class="p-ink" aria-hidden="true" role="presentation"></span>
                 </button>
@@ -51,7 +51,7 @@
                         <div class="flex flex-column gap-4">
 
                             <!-- GENERALES -->
-                            <p-card>
+                            <!-- <p-card>
                                 <div>
                                     <p class="text-3xl pb-4 font-bold text-primary line-height-1">Datos generales</p>
                                 </div>
@@ -142,7 +142,8 @@
                                     </div>
 
                                 </div>
-                            </p-card>
+                            </p-card> -->
+
                             <p-card>
                                 <div>
                                     <p class="text-3xl pb-4 font-bold text-primary line-height-1">Contenido</p>

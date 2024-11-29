@@ -14,10 +14,12 @@ export class ProyectService {
 
     }
 
-    async createProyectEntry(entry: any): Promise<DefaultResponse> {
+    async createProyectEntry(entry: any): Promise<any> {
         try {
-            let response = await lastValueFrom(this.http.post<DefaultResponse>(this.apiUrl + 'create', { entry }));
-            return response!;
+            console.log(entry);
+
+            let response = await firstValueFrom(this.http.post<any>(this.apiUrl + '/projects/create', { entry }));
+            return response;
         } catch (error) {
             console.log(error);
             throw error;
@@ -33,9 +35,18 @@ export class ProyectService {
         }
     }
 
-    async deleteProyectEntry(entryId: string): Promise<DefaultResponse> {
+    async getNotificacion(): Promise<any[]> {
         try {
-            let response = await lastValueFrom(this.http.post<DefaultResponse>(this.apiUrl + 'delete', { entryId }));
+            const response = await firstValueFrom(this.http.get<any>('http://localhost:3001/project-applications'));
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async deleteProyectEntry(entryId: number): Promise<DefaultResponse> {
+        try {
+            let response = await lastValueFrom(this.http.delete<any>('http://localhost:3001/api/projects/delete/' + entryId));
             return response!
         } catch (error) {
             console.log(error);
