@@ -10,7 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { environment } from 'src/environments/environment';
-import { LoginService } from 'src/app/layout/service/login.service'; 
+import { LoginService } from 'src/app/layout/service/login.service';
 
 @Component({
   standalone: true,
@@ -107,5 +107,9 @@ export class LoginComponent {
       this.msgs = [];
       this.showMessages = true;
     });
+  }
+
+  goToSignUp(): void {
+    this.router.navigate(['/auth/sing-up']);
   }
 }

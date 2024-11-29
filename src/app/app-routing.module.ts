@@ -13,6 +13,10 @@ import { SingUpComponent } from './main/components/auth/sing-up/sing-up.componen
             [
                 // Ruta principal redirige al LoginComponent
                 {
+                    path: 'login',
+                    component: LoginComponent,
+                },
+                {
                     path: '',
                     component: LoginComponent,
                 },

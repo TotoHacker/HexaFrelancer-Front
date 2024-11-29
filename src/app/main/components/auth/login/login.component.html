@@ -25,14 +25,16 @@
                         </div>
                         <div class="flex flex-column gap-3">
                             <div class="flex align-items-center justify-content-end gap-5">
-                                <!-- <a class="font-medium no-underline ml-2 text-right cursor-pointer"
-                                    style="color: var(--primary-color)" (click)="recoverPassword()">¿Olvidaste tu contraseña?</a> -->
+                                <a class="font-medium no-underline ml-2 text-right cursor-pointer"
+                                    style="color: var(--primary-color)" (click)="recoverPassword()">¿Olvidaste tu contraseña?</a>
                             </div>
                             <button pButton pRipple label="Iniciar sesión" class="w-full p-3 text-xl border-round-3xl"
                                 [loading]="loader" style="background-color: var(--primary-color); border: none;" (click)="submitForm($event)"></button>
                             <div class="flex justify-content-center mt-4">
                                 <button pButton pRipple label="Registrate" class="w-6 p-3 text-xl border-round-3xl"
-                                    [loading]="loader" style="background-color: var(--primary-color); border: none;" routerLink="/sing-up"></button>
+                                [loading]="loader" style="background-color: var(--primary-color); border: none;" (click)="goToSignUp()"></button>
+
+
                             </div>
                         </div>
                         <p-messages *ngIf="showMessages" [value]="msgs"></p-messages>
