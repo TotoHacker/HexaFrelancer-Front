@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import * as bcrypt from 'bcryptjs'; // Importación para manejar el cifrado de contraseñas
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -19,7 +20,7 @@ export class LoginService {
   async sendRecoveryEmail(email: string): Promise<any> {
     try {
       const response = await this.http.post<any>(this.RECOVERY_URL, { email }).toPromise();
-      return response; // Asegúrate de que el servidor devuelva la respuesta adecuada
+      return response; 
     } catch (error) {
       console.error('Error enviando el correo de recuperación', error);
       throw new Error('Ocurrió un error al intentar enviar el correo de recuperación');
@@ -32,10 +33,16 @@ export class LoginService {
       // Obtener todos los usuarios
       const users: any[] = await this.http.get<any[]>(this.USERS_URL).toPromise();
 
-      // Verificar credenciales
-      const user = users.find(u => u.email === email && u.password === password);
+      // Buscar al usuario por email
+      const user = users.find(u => u.email === email);
 
       if (!user) {
+        throw new Error('Correo o contraseña incorrectos');
+      }
+
+      // Verificar la contraseña cifrada
+      const passwordMatch = await bcrypt.compare(password, user.password); // Comparación segura con bcrypt
+      if (!passwordMatch) {
         throw new Error('Correo o contraseña incorrectos');
       }
 
@@ -43,7 +50,6 @@ export class LoginService {
       console.log('Usuario logueado:');
       console.log('ID:', user.user_id);
       console.log('Correo:', user.email);
-      console.log('Contraseña:', user.password);  // Ten en cuenta que mostrar la contraseña en consola no es recomendable en un entorno de producción
 
       // Guardar el user_id en localStorage
       localStorage.setItem('userId', user.user_id.toString());
