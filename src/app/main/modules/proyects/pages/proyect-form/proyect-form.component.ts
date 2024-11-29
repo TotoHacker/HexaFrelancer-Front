@@ -124,6 +124,7 @@ export class ProyectFormComponent {
 
     constructor(
         private fb: FormBuilder,
+        private toast: ToastService,
         private service: ProyectService,
     ) {
         this.clientForm = this.fb.group({
@@ -275,14 +276,15 @@ export class ProyectFormComponent {
             let form = this.clientForm.value;
             // const userId = localStorage.getItem('userId');
             const value = {
-                user_id: null,
+                user_id: parseInt(userId),
                 title: form.titleProyect,
-                description: form.description,
-                budget: form.budget,
+                description: 'description',
+                budget: form.price,
                 status: 'Open',
-                deadline: form.deadline,
+                deadline: "2024-12-31",
             };
 
+            let tosat = await this.toast.showSuccess('Succes', 'Proyecto creado exitosamente')
             let response = await this.service.createProyectEntry(value)
 
         } catch (error) {
