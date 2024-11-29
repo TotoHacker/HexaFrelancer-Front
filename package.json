@@ -28,6 +28,7 @@
         "@fullcalendar/daygrid": "^6.0.3",
         "@fullcalendar/interaction": "^6.0.3",
         "@fullcalendar/timegrid": "^6.0.3",
+        "bcryptjs": "^2.4.3",
         "chart.js": "^4.4.3",
         "ckeditor5": "^43.0.0",
         "ckeditor5-premium-features": "^43.0.0",
